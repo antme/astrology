@@ -14,4 +14,13 @@ astrology.listconstellation:
     _title: 'Astrology API'
   requirements:
     _permission: 'access content'
+    
+    
+astrology.question:
+  path: '/astrology/question/{method}'
+  defaults:
+    _controller: '\Drupal\astrology\Controller\QuestionController::do_req'
+    _title: 'Astrology API'
+  requirements:
+    _permission: 'access content'
 
