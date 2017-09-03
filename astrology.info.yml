@@ -1,0 +1,4 @@
+name: Drupal 8 Astrology module
+description: 'Astrology module for Drupal 8'
+type: module
+core: 8.x
