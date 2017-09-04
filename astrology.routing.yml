@@ -23,4 +23,12 @@ astrology.question:
     _title: 'Astrology API'
   requirements:
     _permission: 'access content'
+    
+astrology.user:
+  path: '/astrology/user/{method}'
+  defaults:
+    _controller: '\Drupal\astrology\Controller\UserController::do_req'
+    _title: 'Astrology API'
+  requirements:
+    _permission: 'access content'
 
