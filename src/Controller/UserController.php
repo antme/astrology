@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\Core\Database\StatementInterface;
 use Drupal\Core\Database\Database;
+use Drupal\astrology\Data\DataUtil;
 
 /**
  * UserController
@@ -23,7 +24,10 @@ class UserController extends ControllerBase {
             $results=$this->addUser();
             break;          
         case 'get':
-            $results =  $this->loadUserInfo();
+            $results = $this->loadUserInfo();
+            break;
+        case 'test':
+            $results = $this->test();
              break;     
         default:
             break;
@@ -51,6 +55,7 @@ class UserController extends ControllerBase {
           'wxid' => $wxId
       );
       
+      
       if($count > 0){
           $exe_results = \Drupal::database()->update("users_xingzuo_data")->condition('wxid', $wxId)->fields($fields)->execute();          
       }else{
@@ -75,6 +80,11 @@ class UserController extends ControllerBase {
       $query->condition('n.wxid', $wxId);   
       $results = $query->execute()->fetchAll();
       return $results;
+  }
+  
+  public function test(){
+      //return DataUtil::getXingzuoByDate("2017-09-04 16:39:57");
+      return DataUtil::getRandomXingzuo();
   }
 
 
