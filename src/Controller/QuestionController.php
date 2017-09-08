@@ -30,6 +30,9 @@ class QuestionController extends ControllerBase {
         case 'zhanxing':
             $results =  $this->randomZhanxin();
             break;   
+        case 'viewquestionresult':
+            $results =  $this->viewQuestionResult();
+            break;   
         default:
             break;
     }
@@ -64,32 +67,38 @@ class QuestionController extends ControllerBase {
      $xingxin = DataUtil::getRandomXingxin();
      $gongwei = DataUtil::getRandomGongwei();     
      
-     $query_str = "select n.entity_id from node__field_xingzuo_name as n where n.bundle='shierxingzuo' and n.field_xingzuo_name_value='".$xingzuo."';";
+     $query_str = "select n.entity_id, f.uri, j.field_xingzuojixiong_value from node__field_xingzuo_name as n, node__field_xingzuotubiao as t, file_managed as f, node__field_xingzuojixiong as j where j.entity_id=n.entity_id and n.entity_id = t.entity_id and t.field_xingzuotubiao_target_id = f.fid and n.bundle='shierxingzuo' and n.field_xingzuo_name_value='".$xingzuo."'";
      $xingzuo_results = \Drupal::database()->query($query_str)->fetchObject();
-     $jixong_Query = "select field_xingzuojixiong_value as jixong from node__field_xingzuojixiong where entity_id='" . $results->entity_id ."'";
-     $jx_results = \Drupal::database()->query($jixong_Query)->fetchObject();
-     $xingzuo_results->jixong =  $jx_results->jixong;
+     $xingzuo_results->name = DataUtil::getXingzuoInfo()[$xingzuo];
      
-     $query_str = "select n.entity_id from node__field_xingxing as n where n.bundle='shidaxingxing' and n.field_xingxing_value='".$xingxin."';";
+     
+     
+     $query_str = "select n.entity_id, f.uri, j.field_xingzuojixiong_value from node__field_xingxing as n, node__field_xingzuojixiong as j, node__field_xingxingtubiao as t, file_managed as f  where j.entity_id=n.entity_id and n.entity_id = t.entity_id and t.field_xingxingtubiao_target_id =f.fid  and n.bundle='shidaxingxing' and n.field_xingxing_value='".$xingxin."'";
      $xingxin_results = \Drupal::database()->query($query_str)->fetchObject();  
-     $jixong_Query = "select field_xingzuojixiong_value as jixong from node__field_xingzuojixiong where entity_id='" . $xingxin_results->entity_id ."'";
-     $jx_results = \Drupal::database()->query($jixong_Query)->fetchObject();
-     $xingxin_results->jixong =  $jx_results->jixong;
      
      
-     $query_str = "select n.entity_id from node__field_gongwei as n where n.bundle='shiergongwei' and n.field_gongwei_value='".$gongwei."';";
+     $query_str = "select n.entity_id, f.uri, j.field_xingzuojixiong_value from node__field_gongwei as n, node__field_xingzuojixiong as j, node__field_gongweitubiao as t, file_managed as f  where j.entity_id=n.entity_id and n.entity_id = t.entity_id and t.field_gongweitubiao_target_id =f.fid  and n.bundle='shiergongwei' and n.field_gongwei_value='".$gongwei."'";   
      $gw_results = \Drupal::database()->query($query_str)->fetchObject();    
-     $jixong_Query = "select field_xingzuojixiong_value as jixong from node__field_xingzuojixiong where entity_id='" . $gw_results->entity_id ."'";
-     $jx_results = \Drupal::database()->query($jixong_Query)->fetchObject();
-     $gw_results->jixong =  $jx_results->jixong;
 
-    // return $gw_results;
-     return Node::load($gw_results->entity_id);
      
-     //return $gw_results;
+     $xingzuo_results->uri = $this->parserUri($xingzuo_results);
+     $xingxin_results->uri = $this->parserUri($xingxin_results);
+     $gw_results->uri = $this->parserUri($gw_results);
+     
+     
+     $data->xingzuo = $xingzuo_results;
+     $data->xingxing = $xingxin_results;
+     $data->gw = $gw_results;
+     return $data;
       
   }
 
+  
+  public function parserUri($data){
+        return "/sites/default/files/" . str_replace("public://","",$data->uri);
+  }
+  
+ 
 
  
 }
