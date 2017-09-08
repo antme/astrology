@@ -97,8 +97,28 @@ class DataUtil
     {
         
         $XINGZUO_ARRAY = DataUtil::getXingzuoInfo();
+        return $XINGZUO_ARRAY[$enName];
         
       
+    }
+    
+    
+    public static function getGongweiCNName($enName)
+    {
+        
+        $GONGWEI_ARRAY = DataUtil::getGongweiInfo();
+        return $GONGWEI_ARRAY[$enName];
+        
+        
+    }
+    
+    public static function getXingxinCNName($enName)
+    {
+        
+        $XINGXIN_ARRAY = DataUtil::getXingxinInfo();
+        return $XINGXIN_ARRAY[$enName];
+        
+        
     }
     
     
