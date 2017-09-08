@@ -1,12 +1,3 @@
-
-astrology.astrology:
-  path: '/astrology'
-  defaults:
-    _controller: '\Drupal\astrology\Controller\AstrologyController::render'
-    _title: 'Astrology API'
-  requirements:
-    _permission: 'access content'
-
 astrology.listconstellation:
   path: '/astrology/constellation/{method}'
   defaults:

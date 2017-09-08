@@ -60,8 +60,7 @@ class ConstellationController extends ControllerBase {
           
           
       }
-      
-      
+   
       return   $results;
   }
 

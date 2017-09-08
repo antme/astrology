@@ -95,45 +95,10 @@ class DataUtil
 
     public static function getXingzuoCNName($enName)
     {
-        if ($enName == "baiyang") {
-            return "����";
-        }
         
-        if ($enName == "jinniu") {
-            return "��ţ";
-        }
+        $XINGZUO_ARRAY = DataUtil::getXingzuoInfo();
         
-        if ($enName == "shuangzi") {
-            return "˫��";
-        }
-        
-        if ($enName == "juxie") {
-            return "��з";
-        }
-        if ($enName == "shizi") {
-            return "ʨ��";
-        }
-        if ($enName == "chunv") {
-            return "��Ů";
-        }
-        if ($enName == "tianping") {
-            return "���";
-        }
-        if ($enName == "tianxie") {
-            return "��Ы";
-        }
-        if ($enName == "sheshou") {
-            return "����";
-        }
-        if ($enName == "mojie") {
-            return "Ħ��";
-        }
-        if ($enName == "shuiping") {
-            return "ˮƿ";
-        }
-        if ($enName == "shuangyu") {
-            return "˫��";
-        }
+      
     }
     
     
@@ -157,8 +122,61 @@ class DataUtil
          return $XINGZUO_ARRAY;
     }
     
+    public static function getGongweiInfo(){
+        
+        $GONGWEI_ARRAY = array(
+            "diyigong" => "第1宫",
+            "diergong" => "第2宫",
+            "disangong" => "第3宫",
+            "disigong" => "第4宫",
+            "diwugong" => "第5宫",
+            "diliugong" => "第6宫",
+            "diqigong" => "第7宫",
+            "dibagong" => "第8宫",
+            "dijiugong" => "第8宫",
+            "dishigong" => "第10宫",
+            "dishiyigong" => "第11宫",
+            "dishiergong" => "第12宫"
+        );
+        
+        return $GONGWEI_ARRAY;
+    }
+    
+    
+    public static function getXingxinInfo(){
+        
+        $XINGXIN_ARRAY = array(
+            "taiyang" => "太阳",
+            "yueliang" => "月亮",
+            "shuixing" => "水星",
+            "jinxing" => "金星",
+            "huoxing" => "火星",
+            "muxing" => "木星",
+            "tuxing" => "土星",
+            "tianwangxing" => "天王星",
+            "haiwangxing" => "海王星",
+            "mingwangxing" => "冥王星"
+        );
+        
+        return $XINGXIN_ARRAY;
+    }
+    
+    
     public static function getRandomXingzuo(){
-        return DataUtil::getXingzuoInfo();
+        $XINGZUO_ARRAY = DataUtil::getXingzuoInfo();
+        $rand_keys = array_rand($XINGZUO_ARRAY, 1);
+        return $rand_keys;
+    }
+    
+    public static function getRandomGongwei(){
+        $GONGWEI_ARRAY = DataUtil::getGongweiInfo();
+        $rand_keys = array_rand($GONGWEI_ARRAY, 1);
+        return $rand_keys;
+    }
+    public static function getRandomXingxin(){
+        $XINGXIN_ARRAY = DataUtil::getXingxinInfo();
+        $rand_keys = array_rand($XINGXIN_ARRAY, 1);
+        return $rand_keys;
     }
     
     
