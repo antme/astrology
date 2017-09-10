@@ -37,7 +37,9 @@ class UserController extends ControllerBase {
             break;
     }
     
-    return new JsonResponse( $results );
+    $res =  new JsonResponse( $results );
+    $res->setCallback($_REQUEST['callback']);
+    return $res;
   }
   
   public function addUser(){

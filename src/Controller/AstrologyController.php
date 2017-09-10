@@ -29,7 +29,9 @@ class AstrologyController extends ControllerBase {
                 break;
         }
         
-        return new JsonResponse( $results );
+        $res =  new JsonResponse( $results );
+        $res->setCallback($_REQUEST['callback']);
+        return $res;
     }
     
     public function readXinpanResultData(){
