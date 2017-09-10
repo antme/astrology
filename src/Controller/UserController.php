@@ -12,6 +12,7 @@ use Drupal\Core\Database\StatementInterface;
 use Drupal\Core\Database\Database;
 use Drupal\astrology\Data\DataUtil;
 use function GuzzleHttp\json_decode;
+use Drupal\astrology\service\UserService;
 
 /**
  * UserController
@@ -106,18 +107,7 @@ class UserController extends ControllerBase {
   public function loadUserInfo(){
       $wxId='test';
       
-      $query = \Drupal::database()->select('users_xingzuo_data', 'n');
-      $query->fields(null,  array(
-          'name',
-          'sex',
-          'birthDay',
-          'live_address',
-          'birth_address',
-          'wxid'
-      ));
-      $query->condition('n.wxid', $wxId);   
-      $results = $query->execute()->fetchAll();
-      return $results;
+      return UserService::loadUserInfo($wxId);
   }
   
   function loadxingpan(){
