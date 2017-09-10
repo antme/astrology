@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\astrology\service\UserService;
 use Drupal\astrology\Data\DataUtil;
+use function GuzzleHttp\Promise\each;
 
 /**
  * AstrologyController
@@ -26,6 +27,9 @@ class AstrologyController extends ControllerBase {
                 break;
             case 'read_xingxiang':
                 $results =  $this->readXingXiangData();
+                break;
+            case 'read_kaiyun':
+                $results =  $this->readKaiYunData();
                 break;
             default:
                 break;
@@ -118,5 +122,25 @@ class AstrologyController extends ControllerBase {
         $results = \Drupal::database()->query($query_str)->fetchAll();
 
         return $results;
+    }
+
+    public function readKaiYunData(){
+        $wxId = 'test';
+        $user = UserService::loadUserInfo($wxId);
+        $xingzuo_name = DataUtil::getXingzuoByDate($user['birthDay']);
+        
+        
+        $query_str = "select b.field_buchangxingzuo_value, y.field_xingyunyanse_value,j.field_duiyingjinshu_value, k.field_kaiyunbaoshi_value from node__field_kaiyunbaoshi as k, node__field_xingzuo_name as g
+        , node__field_duiyingjinshu as j,node__field_xingyunyanse as y,node__field_buchangxingzuo as b where b.entity_id=g.entity_id and y.entity_id=g.entity_id and j.entity_id=g.entity_id and k.entity_id=g.entity_id
+        and g.field_xingzuo_name_value='" . $xingzuo_name['xingzuo'] ."'";
+        
+        
+        $results = \Drupal::database()->query($query_str)->fetchAll();
+        foreach ($results as $item){
+            $item->xz_name_cn= DataUtil::getXingzuoCNName($item->field_buchangxingzuo_value)."座";          
+        }
+        
+        return $results;
+        
     }
 }
