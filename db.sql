@@ -6,3 +6,9 @@ CREATE TABLE `users_xingzuo_data` (
   `sex` varchar(255) DEFAULT NULL,
   `birthDay` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `users_xingpan_data` (
+  `wxid` varchar(255) default null,
+  `result` text default null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

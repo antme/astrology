@@ -59,12 +59,13 @@ class ConstellationController extends ControllerBase {
           $results[$key]->stars =  $stars_results;
           
           
-      }
+    }
    
       return   $results;
   }
 
 
+  
 
 
  
