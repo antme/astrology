@@ -69,7 +69,7 @@ class UserController extends ControllerBase {
      
       }
       
-      $url = "http://127.0.0.1:8080/api/v1/calc?birthday=" . urlencode( $_REQUEST['birthDay']) . "&longitude=117.10&latitude=40.13";
+      $url = "http://127.0.0.1:8080/api/v1/calc?birthday=" . urlencode( $_REQUEST['birthDay']) . "&address=". urlencode( $_REQUEST['birth_address']);
       $ch = curl_init(); 
    
       curl_setopt($ch, CURLOPT_URL, $url); 
