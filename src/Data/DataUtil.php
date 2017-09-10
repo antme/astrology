@@ -182,6 +182,38 @@ class DataUtil
     }
     
     
+    public static function getNengLiangDingWeiName($enName){
+        if($enName=="huozu"){
+            return "火族";   
+        }else if($enName=="tuzu"){
+            return "土族";
+        }else if($enName=="fengzu"){
+            return "风族";
+        }else if($enName=="shuizu"){
+            return "水族";
+        }
+
+    }
+    
+    
+    public static function getNengLiangXingzhiName($enName){
+        if($enName=="yangxing"){
+            return "阳性";
+        }else if($enName=="yinxing"){
+            return "阴性";
+        }
+    }
+    
+    
+    public static function getNengLiangFangXiang($enName){
+        if($enName=="insidetooutside"){
+            return "由内向外";
+        }else if($enName=="outsidetoinside"){
+            return "由内向外";
+        }
+    }
+    
+    
     public static function getRandomXingzuo(){
         $XINGZUO_ARRAY = DataUtil::getXingzuoInfo();
         $rand_keys = array_rand($XINGZUO_ARRAY, 1);

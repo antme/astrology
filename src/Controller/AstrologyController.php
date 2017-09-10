@@ -31,6 +31,10 @@ class AstrologyController extends ControllerBase {
             case 'read_kaiyun':
                 $results =  $this->readKaiYunData();
                 break;
+                
+            case 'read_yunshi':
+                $results =  $this->readNengLiangYunShiData();
+                break;
             default:
                 break;
         }
@@ -141,6 +145,38 @@ class AstrologyController extends ControllerBase {
         }
         
         return $results;
+        
+    }
+    
+    public function readNengLiangYunShiData(){
+        
+        
+        $wxId = 'test';
+        $user = UserService::loadUserInfo($wxId);
+        $xingzuo_name = DataUtil::getXingzuoByDate($user['birthDay']);
+        
+        
+        
+        
+        $query_str = "select x.field_xingxing_value, d.field_nengliangdingwei_value, z.field_nengliangxingzhi_value, f.field_nengliangfangxiang_value,
+        xg.field_xingzuoxinggejiyu_value from node__field_xingxing as x, node__field_nengliangdingwei as d , node__field_nengliangxingzhi as z,
+        node__field_xingzuoxinggejiyu as xg,node__field_nengliangfangxiang as f, node__field_xingzuo_name as g where x.entity_id=g.entity_id and d.entity_id=g.entity_id and z.entity_id=g.entity_id
+        and f.entity_id=g.entity_id and xg.entity_id=g.entity_id and g.field_xingzuo_name_value='" . $xingzuo_name['xingzuo'] ."'";
+        
+   
+        
+        
+        $results = \Drupal::database()->query($query_str)->fetchAll();
+        foreach ($results as $item){
+            $item->field_xingxing_value = DataUtil::getXingxinCNName($item->field_xingxing_value);
+            $item->field_nengliangdingwei_value = DataUtil::getNengLiangDingWeiName($item->field_nengliangdingwei_value);
+            $item->field_nengliangxingzhi_value = DataUtil::getNengLiangXingzhiName($item->field_nengliangxingzhi_value);
+            
+            $item->field_nengliangfangxiang_value = DataUtil::getNengLiangFangXiang($item->field_nengliangfangxiang_value);
+        }
+        
+        return $results;
+        
         
     }
 }
