@@ -20,5 +20,15 @@ class UserService
         $results = $query->execute()->fetchAssoc();
         return $results;
     }
+    
+    public static function getWxId(){
+        $wxId=$_COOKIE["_wx_id"];
+        if($wxId==""){
+            $wxId = uniqid();
+            setcookie("_wx_id", $wxId);
+        }
+        
+        return $wxId;
+    }
 }
 

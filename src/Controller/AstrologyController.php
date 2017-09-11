@@ -46,7 +46,7 @@ class AstrologyController extends ControllerBase {
     
     public function readXinpanResultData(){
         
-        $wxId='test';
+        $wxId=UserService::getWxId();
         
         $query = \Drupal::database()->select('users_xingpan_data', 'n');
         $query->condition('n.wxid', $wxId);

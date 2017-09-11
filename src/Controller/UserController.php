@@ -44,8 +44,7 @@ class UserController extends ControllerBase {
   }
   
   public function addUser(){
-      $wxId='test';
-
+      $wxId=UserService::getWxId();
       $query = \Drupal::database()->select('users_xingzuo_data', 'n');
       $query->condition('n.wxid', $wxId);
       $query->fields('n', array('wxid'));
@@ -105,13 +104,12 @@ class UserController extends ControllerBase {
   }
   
   public function loadUserInfo(){
-      $wxId='test';
-      
+      $wxId=UserService::getWxId();
       return UserService::loadUserInfo($wxId);
   }
   
   function loadxingpan(){
-      $wxId='test';
+      $wxId=UserService::getWxId();
       
       $query = \Drupal::database()->select('users_xingpan_data', 'n');
       $query->condition('n.wxid', $wxId);
