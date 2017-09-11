@@ -116,7 +116,7 @@ class AstrologyController extends ControllerBase {
     }
     
     public function readXingXiangData(){
-        $wxId = 'test';
+        $wxId = UserService::getWxId();
         $user = UserService::loadUserInfo($wxId);
         $xingzuo_name = DataUtil::getXingzuoByDate($user['birthDay']);
         
@@ -129,7 +129,7 @@ class AstrologyController extends ControllerBase {
     }
 
     public function readKaiYunData(){
-        $wxId = 'test';
+        $wxId = UserService::getWxId();
         $user = UserService::loadUserInfo($wxId);
         $xingzuo_name = DataUtil::getXingzuoByDate($user['birthDay']);
         
@@ -151,7 +151,7 @@ class AstrologyController extends ControllerBase {
     public function readNengLiangYunShiData(){
         
         
-        $wxId = 'test';
+        $wxId = UserService::getWxId();
         $user = UserService::loadUserInfo($wxId);
         $xingzuo_name = DataUtil::getXingzuoByDate($user['birthDay']);
         

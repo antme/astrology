@@ -22,10 +22,11 @@ class UserService
     }
     
     public static function getWxId(){
-        $wxId=$_COOKIE["_wx_id"];
+        $wxId=$_COOKIE["_wx_id_tst"];
         if($wxId==""){
             $wxId = uniqid();
-            setcookie("_wx_id", $wxId);
+            
+            setcookie("_wx_id_tst",$wxId,time()+7*24*3600,"/");
         }
         
         return $wxId;
