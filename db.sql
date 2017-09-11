@@ -12,3 +12,14 @@ CREATE TABLE `users_xingpan_data` (
   `wxid` varchar(255) default null,
   `result` text default null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+CREATE TABLE `users_zhanxing_history` (
+  `wxid` varchar(255) default null,
+  `question_name` varchar(255) default null,
+  `question_answer` varchar(255) default null,
+  `zx_date` Date default null,
+  `result` text default null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

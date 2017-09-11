@@ -12,6 +12,7 @@ use Drupal\Core\Database\StatementInterface;
 use Drupal\Core\Database\Database;
 use Drupal\astrology\Data\DataUtil;
 use Drupal\node\Entity\Node;
+use Drupal\astrology\service\UserService;
 
 /**
  * QuestionController
@@ -32,6 +33,12 @@ class QuestionController extends ControllerBase {
             break;   
         case 'viewquestionresult':
             $results =  $this->viewQuestionResult();
+            break;   
+        case 'listHistoryQuestionDate':
+            $results =  $this->listHistoryQuestionDate();
+            break;   
+        case 'listHistoryQuestionName':
+            $results =  $this->listHistoryQuestionName();
             break;   
         default:
             break;
@@ -67,7 +74,9 @@ class QuestionController extends ControllerBase {
   public function randomZhanxin(){
      $xingzuo = DataUtil::getRandomXingzuo();
      $xingxin = DataUtil::getRandomXingxin();
-     $gongwei = DataUtil::getRandomGongwei();     
+     $gongwei = DataUtil::getRandomGongwei();    
+     $wxId = UserService::getWxId();
+     $question_name = $_REQUEST['question_name'];
      
      $query_str = "select n.entity_id, f.uri, j.field_xingzuojixiong_value from node__field_xingzuo_name as n, node__field_xingzuotubiao as t, file_managed as f, node__field_xingzuojixiong as j where j.entity_id=n.entity_id and n.entity_id = t.entity_id and t.field_xingzuotubiao_target_id = f.fid and n.bundle='shierxingzuo' and n.field_xingzuo_name_value='".$xingzuo."'";
      $xingzuo_results = \Drupal::database()->query($query_str)->fetchObject();
@@ -85,6 +94,18 @@ class QuestionController extends ControllerBase {
      $data->xingzuo = $xingzuo_results;
      $data->xingxing = $xingxin_results;
      $data->gw = $gw_results;
+     
+     
+     
+     $fields = array(
+         'wxid' => $wxId,
+         'question_name' => $question_name,
+         'zx_date' => date("Y-m-d"),
+         'result' => json_encode($data)
+     );
+     
+     \Drupal::database()->insert("users_zhanxing_history")->fields($fields)->execute();
+     
      return $data;
   }
   
@@ -181,7 +202,7 @@ class QuestionController extends ControllerBase {
           
       }else if($xingzuo_results->field_xingzuo_name_value == "juxie"){
           $luozai_xingzuo_table="node__field_xingxingluozaijuxiezuo";
-          $luozai_xingzuo_field="";
+          $luozai_xingzuo_field="field_xingxingluozaijuxiezuo_value";
           
       }else if($xingzuo_results->field_xingzuo_name_value == "shizi"){
           $luozai_xingzuo_table="node__field_xingxingluozaishizizuo";
@@ -278,6 +299,40 @@ class QuestionController extends ControllerBase {
       
     
   }
+  
+  public function listHistoryQuestionDate(){
+      $wxId = UserService::getWxId();
+      $fields = array(
+          'zx_date' 
+      );
+      $query = \Drupal::database()->select('users_zhanxing_history', 'n');
+      $query->distinct('zx_date');
+      $query->orderBy('zx_date', 'DESC');
+      $query->condition('n.wxid', $wxId);
+      $query->fields('n', $fields);
+      
+      $results = $query->execute()->fetchAll();
+      return $results;
+  }
+  
+  
+  
+  public function listHistoryQuestionName(){
+      $wxId = UserService::getWxId();      
+      $fields = array(
+          'wxid',
+          'question_name',
+          'zx_date' ,
+          'result'
+      );
+      $query = \Drupal::database()->select('users_zhanxing_history', 'n');
+      $query->condition('n.wxid', $wxId);    
+      $query->condition('n.zx_date', $_REQUEST['zx_date']); 
+      $query->fields('n', $fields);
+      
+      $results = $query->execute()->fetchAll();
+      return $results;
+  }
 
   
   public function parserUri($data){
@@ -285,6 +340,7 @@ class QuestionController extends ControllerBase {
   }
   
  
+  
 
  
 }
