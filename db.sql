@@ -8,6 +8,17 @@ CREATE TABLE `users_xingzuo_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
+CREATE TABLE `users_wei_xin` (
+  `openid` varchar(255) default null,
+  `nickname` varchar(255) default null,
+  `sex` varchar(255) default null,
+  `province` varchar(255) default null,
+  `city` varchar(255) default null,
+  `country` varchar(255) default null,
+  `headimgurl` varchar(512) default null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 CREATE TABLE `users_xingpan_data` (
   `wxid` varchar(255) default null,
   `result` text default null

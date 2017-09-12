@@ -37,6 +37,9 @@ class UserController extends ControllerBase {
         case 'token':
             $results = $this->validWxToken();
             break;   
+        case 'load_wx_user':
+            $results = $this->loadWeiXinUserInfo();
+            break;  
         default:
             break;
     }
@@ -119,20 +122,28 @@ class UserController extends ControllerBase {
       $query->fields('n', array('wxid', 'result'));
       $results = $query->execute()->fetchAssoc();
       $results['result'] = json_decode($results['result']);
+      $results['wxid'] = $wxId;
       return $results;
       
   }
   
+  
+  function loadWeiXinUserInfo(){
+      $wxId=UserService::getWxId();
+  }
   
   
   public function test(){
       //return DataUtil::getXingzuoByDate("2017-09-04 16:39:57");
 //       return WeixinService::getJsTicket();
 
-      return array(urlencode("http://120.78.14.247/index.php"));
+      return WeixinService::authorization_code();
+
+//       return array(urlencode("http://test.vlvlife.com/index.php/astrology/user/token"));
   }
 
   public function validWxToken(){
       
+      return $_REQUEST['echostr'];
   }
 }

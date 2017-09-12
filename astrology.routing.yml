@@ -30,4 +30,12 @@ astrology.user:
     _title: 'Astrology API'
   requirements:
     _permission: 'access content'
+    
+astrology.redirect:
+  path: '/astrology/redirect/{method}'
+  defaults:
+    _controller: '\Drupal\astrology\Controller\RedirectController::do_req'
+    _title: 'Astrology API'
+  requirements:
+    _permission: 'access content'
 
