@@ -6,14 +6,11 @@
 
 namespace Drupal\astrology\Controller;
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Drupal\Core\Database\StatementInterface;
-use Drupal\Core\Database\Database;
-use Drupal\astrology\Data\DataUtil;
-use function GuzzleHttp\json_decode;
 use Drupal\astrology\service\UserService;
 use Drupal\astrology\service\WeixinService;
+use function GuzzleHttp\json_decode;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Drupal\astrology\service\Logger;
 
 /**
  * UserController
@@ -116,14 +113,16 @@ class UserController extends ControllerBase {
   }
   
   function loadxingpan(){
+      $logger = new Logger("/tmp/ast.log");
       $wxId=UserService::getWxId();
-      log("found wxid with " . $wxId ." for loadxingpan");
+      $logger->info("check wxid for loadxingpan " . $wxId);
       
       $query = \Drupal::database()->select('users_xingpan_data', 'n');
       $query->condition('n.wxid', $wxId);
       $query->fields('n', array('wxid', 'result'));
       $results = $query->execute()->fetchAssoc();
       
+      $logger->info("check users_xingpan_data for loadxingpan " . $wxId  ." and result is " . $results);
       if($results && $results['wxid']){
           $results['result'] = json_decode($results['result']);
           $results['wxid'] = $wxId;
