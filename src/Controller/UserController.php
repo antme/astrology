@@ -18,7 +18,9 @@ use Drupal\astrology\service\Logger;
 class UserController extends ControllerBase {
 
   public function do_req($method) {
-      
+   $logger = new Logger("/tmp/ast");
+   $logger->info("do_req called for  " . $method);
+   
     switch ($method){
         case  'add':
             $results=$this->addUser();
@@ -113,7 +115,7 @@ class UserController extends ControllerBase {
   }
   
   function loadxingpan(){
-      $logger = new Logger("/tmp/ast.log");
+      $logger = new Logger("/tmp/ast");
       $wxId=UserService::getWxId();
       $logger->info("check wxid for loadxingpan " . $wxId);
       
