@@ -18,7 +18,10 @@ class UserService
         ));
         $query->condition('n.wxid', $wxId);
         $results = $query->execute()->fetchAssoc();
-        return $results;
+        if(isset($results)){
+            return $results();
+        }
+        return array();
     }
     
     public static function getWxId(){
