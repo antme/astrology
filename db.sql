@@ -23,3 +23,14 @@ CREATE TABLE `users_zhanxing_history` (
   `result` text default null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+
+CREATE TABLE `wx_ticket_token` (
+  `token` varchar(512) default null,
+  `type` varchar(255) default null,
+  `expire_time` int default 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+

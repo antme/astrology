@@ -13,6 +13,7 @@ use Drupal\Core\Database\Database;
 use Drupal\astrology\Data\DataUtil;
 use function GuzzleHttp\json_decode;
 use Drupal\astrology\service\UserService;
+use Drupal\astrology\service\WeixinService;
 
 /**
  * UserController
@@ -33,6 +34,8 @@ class UserController extends ControllerBase {
              break;     
         case 'loadxingpan':
             $results = $this->loadxingpan();
+        case 'token':
+            $results = $this->validWxToken();
             break;   
         default:
             break;
@@ -124,8 +127,12 @@ class UserController extends ControllerBase {
   
   public function test(){
       //return DataUtil::getXingzuoByDate("2017-09-04 16:39:57");
-      return DataUtil::getRandomXingzuo();
+//       return WeixinService::getJsTicket();
+
+      return array(urlencode("http://120.78.14.247/index.php"));
   }
 
-
+  public function validWxToken(){
+      
+  }
 }
