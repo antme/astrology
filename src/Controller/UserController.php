@@ -119,10 +119,10 @@ class UserController extends ControllerBase {
       $wxId=UserService::getWxId();
       $logger->info("check wxid for loadxingpan " . $wxId);
       
-//       $query = \Drupal::database()->select('users_xingpan_data', 'n');
-//       $query->condition('n.wxid', $wxId);
-//       $query->fields('n', array('wxid', 'result'));
-//       $results = $query->execute()->fetchAssoc();
+      $query = \Drupal::database()->select('users_xingpan_data', 'n');
+      $query->condition('n.wxid', $wxId);
+      $query->fields('n', array('wxid', 'result'));
+      $results = $query->execute()->fetchAssoc();
       
 //       if($results && $results['wxid']){
 //           $results['result'] = json_decode($results['result']);
