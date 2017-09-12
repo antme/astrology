@@ -130,7 +130,7 @@ class WeixinService
            
           // $exe_results = \Drupal::database()->insert("users_wei_xin")->fields($user_result)->execute();
            
-           return $output;
+           return $user_result;
 //         }
         
         
