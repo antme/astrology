@@ -16,6 +16,7 @@ class RedirectController extends ControllerBase
         
         WeixinService::authorization_code();
         
+        echo $redirect_url;
         if ($redirect_url == "" || !$redirect_url || $redirect_url==null) {
             $redirect_url = "http://test.vlvlife.com/#ast_redirect";
         }
