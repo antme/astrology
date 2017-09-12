@@ -128,7 +128,7 @@ class WeixinService
            $user_url =  "https://api.weixin.qq.com/sns/userinfo?access_token=" . $access_token . "&openid=" . $openid ."&lang=zh_CN";           
            $user_result = WeixinService::req_url($user_url);
            
-          // $exe_results = \Drupal::database()->insert("users_wei_xin")->fields($user_result)->execute();
+           $exe_results = \Drupal::database()->insert("users_wei_xin")->fields($user_result)->execute();
            
            return $user_result;
 //         }
