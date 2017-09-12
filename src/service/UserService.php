@@ -22,14 +22,26 @@ class UserService
     }
     
     public static function getWxId(){
-        $wxId=$_COOKIE["_wx_id_tst"];
-        if($wxId==""){
-            $wxId = uniqid();
-            
-            setcookie("_wx_id_tst",$wxId,time()+7*24*3600,"/");
-        }
-        
+        $wxId = $_COOKIE["ast_c_id"];
         return $wxId;
+    }
+    
+    
+    public static function loadWeixinUserInfo($openId){
+        
+        $query = \Drupal::database()->select('users_wei_xin', 'n');
+        $query->fields(null,  array(
+            'openid',
+            'nickname',
+            'sex',
+            'province',
+            'city',
+            'country',
+            'headimgurl'
+        ));
+        $query->condition('n.openid', $openId);
+        $results = $query->execute()->fetchAssoc();
+        return $results;
     }
 }
 

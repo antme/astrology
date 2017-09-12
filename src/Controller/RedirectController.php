@@ -15,16 +15,18 @@ class RedirectController extends ControllerBase {
         $redirect_url=$_COOKIE["ast_redirect_url"];
         
         
-//         $redirect_url = $_REQUEST['ast_redirect_url'];
+//      $redirect_url = $_REQUEST['ast_redirect_url'];
         $code = $_REQUEST['code'];
         
-        $results = WeixinService::authorization_code();
+        WeixinService::authorization_code();
         
-        $res =  new JsonResponse( $results );
-        $res->setCallback($_REQUEST['callback']);
-        return $res;
+
         
-//         return new RedirectResponse($redirect_url);
+//         $res =  new JsonResponse( $results );
+//         $res->setCallback($_REQUEST['callback']);
+//         return $res;
+        
+         return new RedirectResponse($redirect_url);
         
     }
     

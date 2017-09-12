@@ -119,15 +119,14 @@ class WeixinService
         $refresh_token = $output->refresh_token;
         $expires_in = $output->expires_in;
         $scope = $output->scope;
-        $user = UserService::loadUserInfo($openid);
+        $user = UserService::loadWeixinUserInfo($openid);
         
-//         if($user['wxid']){
+         if($user['openid']){
             
-//         }else{
+         }else{
         
-        $user_url =  "https://api.weixin.qq.com/sns/userinfo?access_token=" . $access_token . "&openid=" . $openid ."&lang=zh_CN";
-        $user_result = WeixinService::req_url($user_url);
-        
+            $user_url =  "https://api.weixin.qq.com/sns/userinfo?access_token=" . $access_token . "&openid=" . $openid ."&lang=zh_CN";
+            $user_result = WeixinService::req_url($user_url);
             $fields = array(
                 'openid' => $user_result->openid,
                 'nickname' => $user_result->nickname,
@@ -137,13 +136,11 @@ class WeixinService
                 'country' => $user_result->country,
                 'headimgurl' =>  $user_result->headimgurl
             );
-            
-     
+   
+           \Drupal::database()->insert("users_wei_xin")->fields($fields)->execute();
+           setcookie("ast_c_id",$user_result->openid,time()+7*24*3600,"/");
            
-           $exe_results = \Drupal::database()->insert("users_wei_xin")->fields($fields)->execute();
-           
-           return $user_result;
-//         }
+        }
         
         
         
