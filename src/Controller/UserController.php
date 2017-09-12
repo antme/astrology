@@ -118,13 +118,15 @@ class UserController extends ControllerBase {
   function loadxingpan(){
       $wxId=UserService::getWxId();
       
-      $query = \Drupal::database()->select('users_xingpan_data', 'n');
-      $query->condition('n.wxid', $wxId);
-      $query->fields('n', array('wxid', 'result'));
-      $results = $query->execute()->fetchAssoc();
-      $results['result'] = json_decode($results['result']);
-      $results['wxid'] = $wxId;
-      return $results;
+//       $query = \Drupal::database()->select('users_xingpan_data', 'n');
+//       $query->condition('n.wxid', $wxId);
+//       $query->fields('n', array('wxid', 'result'));
+//       $results = $query->execute()->fetchAssoc();
+//       $results['result'] = json_decode($results['result']);
+//       $results['wxid'] = $wxId;
+
+      
+      return array("wxid"=>$wxId);
       
   }
   
