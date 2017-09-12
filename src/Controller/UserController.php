@@ -117,6 +117,7 @@ class UserController extends ControllerBase {
   
   function loadxingpan(){
       $wxId=UserService::getWxId();
+      log("found wxid with " . $wxId ." for loadxingpan");
       
       $query = \Drupal::database()->select('users_xingpan_data', 'n');
       $query->condition('n.wxid', $wxId);
