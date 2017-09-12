@@ -18,7 +18,8 @@ class UserService
         ));
         $query->condition('n.wxid', $wxId);
         $results = $query->execute()->fetchAssoc();
-        if(isset($results)){
+      
+        if(!empty($results) && isset($results['wxid'])){
             return $results();
         }
         return array();
