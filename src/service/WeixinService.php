@@ -124,13 +124,25 @@ class WeixinService
 //         if($user['wxid']){
             
 //         }else{
+        
+        $user_url =  "https://api.weixin.qq.com/sns/userinfo?access_token=" . $access_token . "&openid=" . $openid ."&lang=zh_CN";
+        $user_result = WeixinService::req_url($user_url);
+        
+            $fields = array(
+                'openid' => $user_result->openid,
+                'nickname' => $user_result->nickname,
+                'sex' => $user_result->sex,
+                'province' => $user_result->province,
+                'city' => $user_result->city,
+                'country' => $user_result->country,
+                'headimgurl' =>  $user_result->headimgurl
+            );
             
-           $user_url =  "https://api.weixin.qq.com/sns/userinfo?access_token=" . $access_token . "&openid=" . $openid ."&lang=zh_CN";           
-           $user_result = WeixinService::req_url($user_url);
+     
            
-           $exe_results = \Drupal::database()->insert("users_wei_xin")->fields($user_result)->execute();
+           $exe_results = \Drupal::database()->insert("users_wei_xin")->fields($fields)->execute();
            
-           return $exe_results;
+           return $user_result;
 //         }
         
         
