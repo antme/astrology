@@ -22,7 +22,7 @@ class UserService
             $results = $query->execute()->fetchAssoc();
           
             if(!empty($results) && isset($results['wxid'])){
-                return $results();
+                return $results;
             }
         }
         return array();
