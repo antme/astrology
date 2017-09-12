@@ -102,7 +102,9 @@ class WeixinService
             $scope = $output->scope;
             $user = UserService::loadWeixinUserInfo($openid);
             
-            if ($user['openid']) {} else {
+            if ($user['openid']) {
+                setcookie("ast_c_id", $user_result->openid, time() + 7 * 24 * 3600, "/");               
+            } else {
                 
                 $user_url = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $access_token . "&openid=" . $openid . "&lang=zh_CN";
                 $user_result = WeixinService::req_url($user_url);
