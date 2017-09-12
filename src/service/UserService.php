@@ -7,20 +7,23 @@ class UserService
     
     public static function loadUserInfo($wxId){
         
-        $query = \Drupal::database()->select('users_xingzuo_data', 'n');
-        $query->fields('n',  array(
-            'name',
-            'sex',
-            'birthDay',
-            'live_address',
-            'birth_address',
-            'wxid'
-        ));
-        $query->condition('n.wxid', $wxId);
-        $results = $query->execute()->fetchAssoc();
-      
-        if(!empty($results) && isset($results['wxid'])){
-            return $results();
+        
+        if($wxId && $wxId!=""){
+            $query = \Drupal::database()->select('users_xingzuo_data', 'n');
+            $query->fields('n',  array(
+                'name',
+                'sex',
+                'birthDay',
+                'live_address',
+                'birth_address',
+                'wxid'
+            ));
+            $query->condition('n.wxid', $wxId);
+            $results = $query->execute()->fetchAssoc();
+          
+            if(!empty($results) && isset($results['wxid'])){
+                return $results();
+            }
         }
         return array();
     }
