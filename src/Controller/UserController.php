@@ -115,9 +115,9 @@ class UserController extends ControllerBase {
   }
   
   function loadxingpan(){
-//       $logger = new Logger("/tmp/ast");
-//       $wxId=UserService::getWxId();
-//       $logger->info("check wxid for loadxingpan " . $wxId);
+      $logger = new Logger("/tmp/ast");
+      $wxId=UserService::getWxId();
+      $logger->info("check wxid for loadxingpan " . $wxId);
       
 //       $query = \Drupal::database()->select('users_xingpan_data', 'n');
 //       $query->condition('n.wxid', $wxId);
