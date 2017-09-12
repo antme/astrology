@@ -124,7 +124,7 @@ class UserController extends ControllerBase {
       $query->fields('n', array('wxid', 'result'));
       $results = $query->execute()->fetchAssoc();
       
-      if($results && $results['wxid']){
+      if(!empty($results) && isset($results['wxid'])){
           $results['result'] = json_decode($results['result']);
           $results['wxid'] = $wxId;
           return $results;
