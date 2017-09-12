@@ -115,24 +115,23 @@ class UserController extends ControllerBase {
   }
   
   function loadxingpan(){
-      $logger = new Logger("/tmp/ast");
-      $wxId=UserService::getWxId();
-      $logger->info("check wxid for loadxingpan " . $wxId);
+//       $logger = new Logger("/tmp/ast");
+//       $wxId=UserService::getWxId();
+//       $logger->info("check wxid for loadxingpan " . $wxId);
       
-      $query = \Drupal::database()->select('users_xingpan_data', 'n');
-      $query->condition('n.wxid', $wxId);
-      $query->fields('n', array('wxid', 'result'));
-      $results = $query->execute()->fetchAssoc();
+//       $query = \Drupal::database()->select('users_xingpan_data', 'n');
+//       $query->condition('n.wxid', $wxId);
+//       $query->fields('n', array('wxid', 'result'));
+//       $results = $query->execute()->fetchAssoc();
       
-      $logger->info("check users_xingpan_data for loadxingpan " . $wxId  ." and result is " . $results);
-      if($results && $results['wxid']){
-          $results['result'] = json_decode($results['result']);
-          $results['wxid'] = $wxId;
-          return $results;
-      }else{
-          return array();
-      }
-      
+//       if($results && $results['wxid']){
+//           $results['result'] = json_decode($results['result']);
+//           $results['wxid'] = $wxId;
+//           return $results;
+//       }else{
+//           return array();
+//       }
+      return array();
   }
   
   
