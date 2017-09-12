@@ -34,6 +34,7 @@ class UserController extends ControllerBase {
              break;     
         case 'loadxingpan':
             $results = $this->loadxingpan();
+            break;
         case 'token':
             $results = $this->validWxToken();
             break;   
