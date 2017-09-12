@@ -8,7 +8,7 @@ class UserService
     public static function loadUserInfo($wxId){
         
         $query = \Drupal::database()->select('users_xingzuo_data', 'n');
-        $query->fields(null,  array(
+        $query->fields('n',  array(
             'name',
             'sex',
             'birthDay',
