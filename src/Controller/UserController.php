@@ -12,6 +12,7 @@ use function GuzzleHttp\json_decode;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\astrology\service\Logger;
 use Drupal\astrology\service\LoggerUtil;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * UserController
@@ -45,10 +46,13 @@ class UserController extends ControllerBase
             default:
                 break;
         }
-        
-        $res = new JsonResponse($results);
-        $res->setCallback($_REQUEST['callback']);
-        return $res;
+        if($method == "token"){
+            return new Response($_REQUEST['echostr']);
+        }else{
+            $res = new JsonResponse($results);
+            $res->setCallback($_REQUEST['callback']);
+            return $res;
+        }
     }
 
     public function addUser()
