@@ -113,23 +113,27 @@ class WeixinService
                 
                 $user_url = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $access_token . "&openid=" . $openid . "&lang=zh_CN";
                 $user_result = WeixinService::req_url($user_url);
-                $fields = array(
-                    'openid' => $user_result->openid,
-                    'nickname' => $user_result->nickname,
-                    'sex' => $user_result->sex,
-                    'province' => $user_result->province,
-                    'city' => $user_result->city,
-                    'country' => $user_result->country,
-                    'headimgurl' => $user_result->headimgurl
-                );
-                
-                \Drupal::database()->insert("users_wei_xin")
-                    ->fields($fields)
-                    ->execute();
-               
-                LoggerUtil::log("authorization_code", "new user from openid" .$user_result->openid);
+                if(isset($user_result) && isset($user_result['openid'])){
+                    $fields = array(
+                        'openid' => $user_result->openid,
+                        'nickname' => $user_result->nickname,
+                        'sex' => $user_result->sex,
+                        'province' => $user_result->province,
+                        'city' => $user_result->city,
+                        'country' => $user_result->country,
+                        'headimgurl' => $user_result->headimgurl
+                    );
                     
-                WeixinService::login($user['openid'], $sessionid);
+                    \Drupal::database()->insert("users_wei_xin")
+                        ->fields($fields)
+                        ->execute();
+                   
+                    LoggerUtil::log("authorization_code", "new user from openid" .$user_result->openid);
+                        
+                    WeixinService::login($user['openid'], $sessionid);
+                }else{
+                    LoggerUtil::log("authorization_code", "request user info from weixin failed with openid: " . $openid);
+                }
                     
             }
         }
