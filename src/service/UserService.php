@@ -58,6 +58,7 @@ class UserService
         ));
         $query->condition('n.openid', $openId);
         $results = $query->execute()->fetchAssoc();
+        LoggerUtil::log1($results);
         return $results;
     }
 }
