@@ -113,7 +113,7 @@ class WeixinService
                 
                 $user_url = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $access_token . "&openid=" . $openid . "&lang=zh_CN";
                 $user_result = WeixinService::req_url($user_url);
-                if(isset($user_result) && isset($user_result['openid'])){
+                if(isset($user_result) && isset($user_result->openid)){
                     $fields = array(
                         'openid' => $user_result->openid,
                         'nickname' => $user_result->nickname,
