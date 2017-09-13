@@ -90,7 +90,7 @@ class WeixinService
         $appsecret = "35ed9225570fd3c1f130d3501c496fc2";
         $login_user = WeixinService::loadLoginInfo();
         LoggerUtil::log1($login_user);
-        if (empty($login_user)) {
+        if (empty($login_user) || empty($login_user['openid'])) {
             
             $code = $_REQUEST['code'];
             
