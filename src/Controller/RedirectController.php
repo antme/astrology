@@ -17,7 +17,7 @@ class RedirectController extends ControllerBase
         $results = array();
         switch ($method){
             case  'wx':
-                $redirect_url = $_COOKIE["ast_redirect_url"];                
+                $redirect_url = $_REQUEST["ast_redirect"];                
                 WeixinService::authorization_code();
                 
                 if ($redirect_url == "" || !$redirect_url || $redirect_url==null) {
