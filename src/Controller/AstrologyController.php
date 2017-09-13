@@ -21,6 +21,7 @@ class AstrologyController extends ControllerBase {
    */
     public function do_req($method) {
         session_start();
+        WeixinService::authorization_code();
         switch ($method){
             case  'read_result':
                 $results=$this->readXinpanResultData();
@@ -38,6 +39,7 @@ class AstrologyController extends ControllerBase {
             default:
                 break;
         }
+
         
         $res =  new JsonResponse( $results );
         $res->setCallback($_REQUEST['callback']);

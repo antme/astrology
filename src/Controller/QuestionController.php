@@ -6,21 +6,21 @@
 
 namespace Drupal\astrology\Controller;
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Drupal\Core\Database\StatementInterface;
-use Drupal\Core\Database\Database;
 use Drupal\astrology\Data\DataUtil;
-use Drupal\node\Entity\Node;
 use Drupal\astrology\service\UserService;
+use Drupal\astrology\service\WeixinService;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
+
+use Drupal\astrology\service\WeixinService
 /**
  * QuestionController
  */
 class QuestionController extends ControllerBase {
 
   public function do_req($method) {
-    session_start();
+      session_start();
+      WeixinService::authorization_code();
      
     switch ($method){
         case  'list':

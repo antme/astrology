@@ -10,14 +10,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\Core\Database\StatementInterface;
 use Drupal\Core\Database\Database;
-
+use Drupal\astrology\service\WeixinService;
 /**
  * ConstellationController
  */
 class ConstellationController extends ControllerBase {
 
   public function do_req($method) {
-      session_start();
+    session_start();
+    WeixinService::authorization_code();
     switch ($method){
         case  'list':
             $results=$this->listConstellation();

@@ -14,12 +14,16 @@ use Drupal\astrology\service\Logger;
 use Drupal\astrology\service\LoggerUtil;
 use Symfony\Component\HttpFoundation\Response;
 
+
 /**
  * UserController
  */
 class UserController extends ControllerBase
 {
 
+    session_start();
+    WeixinService::authorization_code();
+    
     public function do_req($method)
     {
         session_start();
