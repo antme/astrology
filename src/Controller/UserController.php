@@ -25,7 +25,6 @@ class UserController extends ControllerBase
     public function do_req($method)
     {
         
-        session_start();
         
         switch ($method) {
             case 'add':

@@ -23,7 +23,6 @@ class AstrologyController extends ControllerBase {
    * Generates an example page.
    */
     public function do_req($method) {
-        session_start();
         
         $sessionId = $_SESSION['ast_c_id_session_id'];
         LoggerUtil::log1("sessionId ====>" . $sessionId);

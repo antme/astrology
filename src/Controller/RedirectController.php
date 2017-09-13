@@ -11,7 +11,6 @@ class RedirectController extends ControllerBase
 {
     public function do_req($method)
     {
-        session_start();
         
         $results = array();
         switch ($method){

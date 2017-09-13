@@ -17,7 +17,6 @@ use Drupal\astrology\service\WeixinService;
 class ConstellationController extends ControllerBase {
 
   public function do_req($method) {
-    session_start();
     switch ($method){
         case  'list':
             $results=$this->listConstellation();

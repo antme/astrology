@@ -19,7 +19,6 @@ use Drupal\astrology\service\WeixinService
 class QuestionController extends ControllerBase {
 
   public function do_req($method) {
-      session_start();
      
     switch ($method){
         case  'list':
