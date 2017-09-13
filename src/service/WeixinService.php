@@ -88,7 +88,7 @@ class WeixinService
     {
         $appId = "wx5dd7a0373f62385b";
         $appsecret = "35ed9225570fd3c1f130d3501c496fc2";
-        $login_user = WeixinService::loadLoginInfo();
+        $login_user = UserService::loadLoginInfo();
         LoggerUtil::log1($login_user);
         if (empty($login_user) || empty($login_user['openid'])) {
             
@@ -107,7 +107,7 @@ class WeixinService
             if (isset($user) && !empty($user['openid'])) {
                 
                 LoggerUtil::log("authorization_code", "found user from openid" . $user['openid']);
-                WeixinService::login($user['openid'], $sessionid);
+                UserService::login($user['openid'], $sessionid);
                 
             } else {
                 LoggerUtil::log("authorization_code", "query user from weixin with session id" . $sessionid);
@@ -154,31 +154,4 @@ class WeixinService
         return $output;
     }
 
-    public static function login($openId, $sessionid)
-    {
-        setcookie("ast_c_id", $openId, time() + 7 * 24 * 3600, "/");
-        $_SESSION['ast_c_id_session_id'] = $sessionid;
-        
-        $fields = array(
-            'ast_c_id_session_id' => $sessionid,
-            'openId' => $openId,
-            'expire_time' => time() + 30*60
-        );
-        $exe_results = \Drupal::database()->insert("users_login")
-        ->fields($fields)
-        ->execute();
-    }
-
-    public static function loadLoginInfo()
-    {
-        $sessionId = $_SESSION['ast_c_id_session_id'];
-        $query = \Drupal::database()->select('users_login', 'n');
-        $query->condition('n.ast_c_id_session_id', $sessionId);
-        $query->condition('n.expire_time', time(), ">");
-        $query->fields('n', array(
-            'openId',
-            'ast_c_id_session_id'
-        ));
-        return $query->execute()->fetchAssoc();
-    }
 }

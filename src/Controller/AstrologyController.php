@@ -12,6 +12,7 @@ use Drupal\astrology\service\UserService;
 use Drupal\astrology\Data\DataUtil;
 use function GuzzleHttp\Promise\each;
 use Drupal\astrology\service\WeixinService;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * AstrologyController
@@ -42,9 +43,23 @@ class AstrologyController extends ControllerBase {
         }
 
         
-        $res =  new JsonResponse( $results );
-        $res->setCallback($_REQUEST['callback']);
-        return $res;
+        if($method == "login"){
+            $login_info = UserService::loadLoginInfo();
+            if(empty($login_info) || empty($login_info['openid'])){
+                
+           
+                $headers = array("Content-Type"=>"application/javascript");
+                return new Response("login();", "200", $headers);
+            }else{
+                $headers = array("Content-Type"=>"application/javascript");
+                return new Response("", "200", $headers);
+            }
+            
+        }else{
+            $res =  new JsonResponse( $results );
+            $res->setCallback($_REQUEST['callback']);
+            return $res;
+        }
     }
     
     public function readXinpanResultData(){
