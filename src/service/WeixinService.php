@@ -89,6 +89,7 @@ class WeixinService
         $appId = "wx5dd7a0373f62385b";
         $appsecret = "35ed9225570fd3c1f130d3501c496fc2";
         $login_user = WeixinService::loadLoginInfo();
+        LoggerUtil::log1($login_user);
         if (empty($login_user)) {
             
             $code = $_REQUEST['code'];
