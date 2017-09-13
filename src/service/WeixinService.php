@@ -103,7 +103,13 @@ class WeixinService
             $expires_in = $output->expires_in;
             $scope = $output->scope;
             $user = UserService::loadWeixinUserInfo($openid);
-            $sessionid = uniqid();
+            
+            $sessionid = $_SESSION['ast_c_id_session_id'];
+            if(empty($sessionid)){
+       
+                $sessionid = uniqid();
+            }
+           
             LoggerUtil::log("authorization_code", $output->errcode . ":" . $output->errmsg);
             if (isset($user) && !empty($user['openid'])) {
                 
