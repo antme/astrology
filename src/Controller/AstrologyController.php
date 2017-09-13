@@ -48,8 +48,7 @@ class AstrologyController extends ControllerBase {
         if($method == "login"){
             $login_info = UserService::loadLoginInfo();
             if(empty($login_info) || empty($login_info['openid'])){
-                
-           
+                LoggerUtil::log("login", " need login for sessiong ====>" .  $_SESSION['ast_c_id_session_id']);   
                 $headers = array("Content-Type"=>"application/javascript");
                 return new Response("login();", "200", $headers);
             }else{
