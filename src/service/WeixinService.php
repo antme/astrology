@@ -103,7 +103,7 @@ class WeixinService
             $user = UserService::loadWeixinUserInfo($openid);
             $sessionid = uniqid();
             
-            if (isset($user)) {
+            if (isset($user) && isset($user['openid'])) {
                 LoggerUtil::log("authorization_code", "found user from openid" . $user['openid']);
       
                 WeixinService::login($user['openid'], $sessionid);
