@@ -92,7 +92,6 @@ class WeixinService
         if (empty($login_user)) {
             
             $code = $_REQUEST['code'];
-            $openid = UserService::getWxId();
             
             $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appId . "&secret=" . $appsecret . "&code=" . $code . "&grant_type=authorization_code";
             $output = WeixinService::req_url($url);
@@ -104,7 +103,7 @@ class WeixinService
             $user = UserService::loadWeixinUserInfo($openid);
             $sessionid = uniqid();
             
-            if ($user) {
+            if (isset($user)) {
                 LoggerUtil::log("authorization_code", "found user from openid" . $user['openid']);
       
                 WeixinService::login($user['openid'], $sessionid);
@@ -156,7 +155,7 @@ class WeixinService
 
     public static function login($openId, $sessionid)
     {
-        setcookie("ast_c_id", $user['openid'], time() + 7 * 24 * 3600, "/");
+        setcookie("ast_c_id", $openId, time() + 7 * 24 * 3600, "/");
         $_SESSION['ast_c_id_session_id'] = $sessionid;
         
         $fields = array(
