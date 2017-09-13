@@ -110,9 +110,10 @@ class WeixinService
                 UserService::login($user['openid'], $sessionid);
                 
             } else {
-                LoggerUtil::log("authorization_code", "query user from weixin with session id" . $sessionid);
+                LoggerUtil::log("authorization_code", "query user from weixin with session id " . $sessionid  . " and weixin open id is " . $openid);
                 $user_url = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $access_token . "&openid=" . $openid . "&lang=zh_CN";
                 $user_result = WeixinService::req_url($user_url);
+                LoggerUtil::log1($user_result);
                 if(isset($user_result) && isset($user_result->openid)){
                     $fields = array(
                         'openid' => $user_result->openid,
