@@ -21,12 +21,12 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends ControllerBase
 {
 
-    session_start();
-    WeixinService::authorization_code();
     
     public function do_req($method)
     {
+        
         session_start();
+        WeixinService::authorization_code();
         
         switch ($method) {
             case 'add':

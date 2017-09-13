@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\astrology\service\UserService;
 use Drupal\astrology\Data\DataUtil;
 use function GuzzleHttp\Promise\each;
+use Drupal\astrology\service\WeixinService;
 
 /**
  * AstrologyController
