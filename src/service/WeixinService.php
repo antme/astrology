@@ -104,7 +104,7 @@ class WeixinService
             $scope = $output->scope;
             $user = UserService::loadWeixinUserInfo($openid);
             $sessionid = uniqid();
-            
+            LoggerUtil::log("authorization_code", $output->errcode . ":" . $output->errmsg);
             if (isset($user) && !empty($user['openid'])) {
                 
                 LoggerUtil::log("authorization_code", "found user from openid" . $user['openid']);
