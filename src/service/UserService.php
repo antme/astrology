@@ -29,8 +29,8 @@ class UserService
     }
     
     public static function getWxId(){
-        $wxId = $_COOKIE["ast_c_id"];
-        if($wxId=="" && ($_SERVER['HTTP_HOST']=='127.0.0.1' || $_SERVER['HTTP_HOST']=='localhost')){
+        $wxId = $_SESSION['ast_c_id_session_id'];
+        if(empty($wxId) && ($_SERVER['HTTP_HOST']=='127.0.0.1' || $_SERVER['HTTP_HOST']=='localhost')){
             $wxId = uniqid();           
             setcookie("ast_c_id",$wxId,time()+7*24*3600,"/");
         }
