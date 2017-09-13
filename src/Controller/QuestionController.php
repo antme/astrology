@@ -10,9 +10,8 @@ use Drupal\astrology\Data\DataUtil;
 use Drupal\astrology\service\UserService;
 use Drupal\astrology\service\WeixinService;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Drupal\astrology\service\WeixinService;
 
-
-use Drupal\astrology\service\WeixinService
 /**
  * QuestionController
  */
