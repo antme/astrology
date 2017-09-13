@@ -6,6 +6,7 @@ use Drupal\astrology\service\WeixinService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\astrology\service\LoggerUtil;
+use Drupal\astrology\service\ConfigService;
 
 class RedirectController extends ControllerBase
 {
@@ -42,7 +43,7 @@ class RedirectController extends ControllerBase
         $url =  $_REQUEST["url"];
         
         $sdk_params = array(
-            "appId"=>"wx5dd7a0373f62385b",
+            "appId"=> ConfigService::getAppId(),
             "timestamp"=>time(),
             "nonceStr"=>uniqid()
             

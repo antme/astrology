@@ -6,8 +6,8 @@ class WeixinService
 
     public static function getAccessToken()
     {
-        $appId = "wx5dd7a0373f62385b";
-        $appsecret = "35ed9225570fd3c1f130d3501c496fc2";
+        $appId =  ConfigService::getAppId();
+        $appsecret = ConfigService::getAppSecret();
         
         $query = \Drupal::database()->select('wx_ticket_token', 'n');
         $query->condition('n.type', "access_token");
@@ -45,8 +45,8 @@ class WeixinService
 
     public static function getJsTicket()
     {
-        $appId = "wx5dd7a0373f62385b";
-        $appsecret = "35ed9225570fd3c1f130d3501c496fc2";
+        $appId =  ConfigService::getAppId();
+        $appsecret = ConfigService::getAppSecret();
         
         $query = \Drupal::database()->select('wx_ticket_token', 'n');
         $query->condition('n.type', "js_ticket");
@@ -86,8 +86,8 @@ class WeixinService
 
     public static function authorization_code()
     {
-        $appId = "wx5dd7a0373f62385b";
-        $appsecret = "35ed9225570fd3c1f130d3501c496fc2";
+        $appId =  ConfigService::getAppId();
+        $appsecret = ConfigService::getAppSecret();
         $login_user = UserService::loadLoginInfo();
         LoggerUtil::log1($login_user);
         if (empty($login_user) || empty($login_user['openid'])) {
@@ -160,5 +160,6 @@ class WeixinService
         $output = json_decode($output);
         return $output;
     }
+    
 
 }

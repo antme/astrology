@@ -14,6 +14,7 @@ use function GuzzleHttp\Promise\each;
 use Drupal\astrology\service\WeixinService;
 use Symfony\Component\HttpFoundation\Response;
 use Drupal\astrology\service\LoggerUtil;
+use Drupal\astrology\service\ConfigService;
 
 /**
  * AstrologyController
@@ -50,7 +51,7 @@ class AstrologyController extends ControllerBase {
             if(empty($login_info) || empty($login_info['openId'])){
                 LoggerUtil::log("login", " need login for sessiong ====>" .  $_SESSION['ast_c_id_session_id']);   
                 $headers = array("Content-Type"=>"application/javascript");
-                return new Response("login();", "200", $headers);
+                return new Response("login('". ConfigService::getAppId() ."');", "200", $headers);
             }else{
                 $headers = array("Content-Type"=>"application/javascript");
                 return new Response("", "200", $headers);
