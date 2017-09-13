@@ -5,12 +5,14 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\astrology\service\WeixinService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\astrology\service\LoggerUtil;
 
 class RedirectController extends ControllerBase
 {
-
     public function do_req($method)
     {
+        session_start();
+        
         $results = array();
         switch ($method){
             case  'wx':
@@ -21,6 +23,7 @@ class RedirectController extends ControllerBase
                 if ($redirect_url == "" || !$redirect_url || $redirect_url==null) {
                     $redirect_url = "http://test.vlvlife.com/astrology_mobile/index.html#ast_redirect";
                 }
+                LoggerUtil::log("do_req:" . $method, $redirect_url."#ast_redirect");
                 return new RedirectResponse($redirect_url."#ast_redirect");
                 break;
             case 'js_sdk':

@@ -20,7 +20,8 @@ use Drupal\astrology\service\UserService;
 class QuestionController extends ControllerBase {
 
   public function do_req($method) {
-      
+    session_start();
+     
     switch ($method){
         case  'list':
             $results=$this->listQuestions();

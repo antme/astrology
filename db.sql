@@ -44,4 +44,10 @@ CREATE TABLE `wx_ticket_token` (
 
 
 
+CREATE TABLE `users_login` (
+  `openid` varchar(255) default null,
+  `ast_c_id_session_id` varchar(255) default null,
+  `expire_time` int default 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 

@@ -88,11 +88,12 @@ class WeixinService
     {
         $appId = "wx5dd7a0373f62385b";
         $appsecret = "35ed9225570fd3c1f130d3501c496fc2";
-        
-        $code = $_REQUEST['code'];
-        $openid = UserService::getWxId();
-        
-        if ($openid == "") {
+        $login_user = WeixinService::loadLoginInfo();
+        if (empty($login_user)) {
+            
+            $code = $_REQUEST['code'];
+            $openid = UserService::getWxId();
+            
             $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appId . "&secret=" . $appsecret . "&code=" . $code . "&grant_type=authorization_code";
             $output = WeixinService::req_url($url);
             $openid = $output->openid;
@@ -101,9 +102,13 @@ class WeixinService
             $expires_in = $output->expires_in;
             $scope = $output->scope;
             $user = UserService::loadWeixinUserInfo($openid);
+            $sessionid = uniqid();
             
-            if ($user['openid']) {
-                setcookie("ast_c_id", $user_result->openid, time() + 7 * 24 * 3600, "/");               
+            if ($user) {
+                LoggerUtil::log("authorization_code", "found user from openid" . $user['openid']);
+      
+                WeixinService::login($user['openid'], $sessionid);
+                
             } else {
                 
                 $user_url = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $access_token . "&openid=" . $openid . "&lang=zh_CN";
@@ -121,7 +126,11 @@ class WeixinService
                 \Drupal::database()->insert("users_wei_xin")
                     ->fields($fields)
                     ->execute();
-                setcookie("ast_c_id", $user_result->openid, time() + 7 * 24 * 3600, "/");
+               
+                LoggerUtil::log("authorization_code", "new user from openid" .$user_result->openid);
+                    
+                WeixinService::login($user['openid'], $sessionid);
+                    
             }
         }
     }
@@ -139,5 +148,33 @@ class WeixinService
         curl_close($ch);
         $output = json_decode($output);
         return $output;
+    }
+
+    public static function login($openId, $sessionid)
+    {
+        setcookie("ast_c_id", $user['openid'], time() + 7 * 24 * 3600, "/");
+        $_SESSION['ast_c_id_session_id'] = $sessionid;
+        
+        $fields = array(
+            'ast_c_id_session_id' => $sessionid,
+            'openId' => $openId,
+            'expire_time' => time() + 30*60
+        );
+        $exe_results = \Drupal::database()->insert("users_login")
+        ->fields($fields)
+        ->execute();
+    }
+
+    public static function loadLoginInfo()
+    {
+        $sessionId = $_SESSION['ast_c_id_session_id'];
+        $query = \Drupal::database()->select('users_login', 'n');
+        $query->condition('n.ast_c_id_session_id', $sessionId);
+        $query->condition('n.expire_time', time(), ">");
+        $query->fields('n', array(
+            'openId',
+            'ast_c_id_session_id'
+        ));
+        return $query->execute()->fetchAssoc();
     }
 }

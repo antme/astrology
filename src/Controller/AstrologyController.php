@@ -20,7 +20,7 @@ class AstrologyController extends ControllerBase {
    * Generates an example page.
    */
     public function do_req($method) {
-        
+        session_start();
         switch ($method){
             case  'read_result':
                 $results=$this->readXinpanResultData();
