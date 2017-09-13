@@ -13,6 +13,7 @@ use Drupal\astrology\Data\DataUtil;
 use function GuzzleHttp\Promise\each;
 use Drupal\astrology\service\WeixinService;
 use Symfony\Component\HttpFoundation\Response;
+use Drupal\astrology\service\LoggerUtil;
 
 /**
  * AstrologyController
@@ -23,6 +24,9 @@ class AstrologyController extends ControllerBase {
    */
     public function do_req($method) {
         session_start();
+        
+        $sessionId = $_SESSION['ast_c_id_session_id'];
+        LoggerUtil::log1("sessionId ====>" . $sessionId);
         switch ($method){
             case  'read_result':
                 $results=$this->readXinpanResultData();
