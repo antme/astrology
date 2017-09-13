@@ -96,6 +96,7 @@ class WeixinService
             
             $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appId . "&secret=" . $appsecret . "&code=" . $code . "&grant_type=authorization_code";
             $output = WeixinService::req_url($url);
+            LoggerUtil::log("authorization_code", $url);
             $openid = $output->openid;
             $access_token = $output->access_token;
             $refresh_token = $output->refresh_token;
@@ -113,8 +114,7 @@ class WeixinService
                 LoggerUtil::log("authorization_code", "query user from weixin with session id " . $sessionid  . " and weixin open id is " . $openid);
                 $user_url = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $access_token . "&openid=" . $openid . "&lang=zh_CN";
                 $user_result = WeixinService::req_url($user_url);
-                LoggerUtil::log1($user_result);
-                if(isset($user_result) && isset($user_result->openid)){
+                if(!empty($user_result) && isset($user_result->openid)){
                     $fields = array(
                         'openid' => $user_result->openid,
                         'nickname' => $user_result->nickname,
