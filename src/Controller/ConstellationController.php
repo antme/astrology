@@ -18,7 +18,6 @@ class ConstellationController extends ControllerBase {
 
   public function do_req($method) {
     session_start();
-    WeixinService::authorization_code();
     switch ($method){
         case  'list':
             $results=$this->listConstellation();

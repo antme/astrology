@@ -23,7 +23,6 @@ class AstrologyController extends ControllerBase {
    */
     public function do_req($method) {
         session_start();
-        WeixinService::authorization_code();
         switch ($method){
             case  'read_result':
                 $results=$this->readXinpanResultData();

@@ -26,7 +26,6 @@ class UserController extends ControllerBase
     {
         
         session_start();
-        WeixinService::authorization_code();
         
         switch ($method) {
             case 'add':
