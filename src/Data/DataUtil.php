@@ -209,7 +209,7 @@ class DataUtil
         if($enName=="insidetooutside"){
             return "由内向外";
         }else if($enName=="outsidetoinside"){
-            return "由内向外";
+            return "由外向内";
         }
     }
     
