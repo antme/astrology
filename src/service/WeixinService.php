@@ -190,7 +190,7 @@ class WeixinService
                     "nonceStr"=>$nonce_str
                     
                 );
-                $orderids =  (string)$msgArr->prepay_id;
+                $orderids =  "prepay_id=" . (string)$msgArr->prepay_id;
                 
                 // 这里参数的顺序要按照 key 值 ASCII 码升序排序
                 $order_string = "appId=".ConfigService::getAppId()."&nonceStr=" . $nonce_str . "&package=" . $orderids . "&timeStamp=" . $sdk_params['timestamp'] . "&signType=MD5";
