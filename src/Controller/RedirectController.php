@@ -24,7 +24,8 @@ class RedirectController extends ControllerBase
                     $redirect_url = "http://test.vlvlife.com/astrology_mobile/index.html";
                 }
                 LoggerUtil::log("do_req:" . $method, $redirect_url);
-                return new TrustedRedirectResponse($redirect_url);
+           
+                return new RedirectResponse($redirect_url);
                 break;
             case 'js_sdk':
                 $results = $this->loadJSSdkConfig();
