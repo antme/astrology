@@ -137,7 +137,7 @@ class WeixinService
                    
                     LoggerUtil::log("authorization_code", "new user from openid" .$user_result->openid);
                         
-                    WeixinService::login($user['openid'], $sessionid);
+                    UserService::login($user['openid'], $sessionid);
                 }else{
                     LoggerUtil::log("authorization_code", "request user info from weixin failed with openid: " . $openid);
                 }
