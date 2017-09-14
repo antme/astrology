@@ -187,14 +187,14 @@ class WeixinService
                 $order_info = array(
                     "appId"=> ConfigService::getAppId(),
                     "timestamp"=>time(),
-                    "nonceStr"=>uniqid()
+                    "nonceStr"=>$nonce_str
                     
                 );
+                $orderids =  (string)$msgArr->prepay_id;
                 
                 // 这里参数的顺序要按照 key 值 ASCII 码升序排序
-                $order_string = "appId=".ConfigService::getAppId()."&noncestr=" . $sdk_params['nonceStr'] . "&package=" . $msgArr->prepay_id . "&timestamp=" . $sdk_params['timestamp'] . "&signType=MD5";
+                $order_string = "appId=".ConfigService::getAppId()."&noncestr=" . $nonce_str . "&package=" . $orderids . "&timestamp=" . $sdk_params['timestamp'] . "&signType=MD5";
                 
-                $orderids =  (string)$msgArr->prepay_id;
                 $signature = md5($order_string);
                 $order_info["paySign"] = $signature;
                 $order_info["package"] =  $orderids;
