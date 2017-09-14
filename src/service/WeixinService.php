@@ -89,7 +89,7 @@ class WeixinService
         $appId = ConfigService::getAppId();
         $appsecret = ConfigService::getAppSecret();
         $login_user = UserService::loadLoginInfo();
-        LoggerUtil::log1($login_user);
+        LoggerUtil::log("authorization_code", "authorization_code called");
         if (empty($login_user) || empty($login_user['openid'])) {
             
             $code = $_REQUEST['code'];
