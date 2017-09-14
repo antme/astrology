@@ -51,3 +51,9 @@ CREATE TABLE `users_login` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
+alter table users_xingpan_data add column ispay tinyint(1) default 0;
+alter table users_xingpan_data add column id varchar(36) default null;
+alter table users_xingpan_data add column createdOn int default 0;
+
+
+

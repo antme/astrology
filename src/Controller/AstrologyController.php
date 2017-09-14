@@ -38,7 +38,9 @@ class AstrologyController extends ControllerBase
             case 'read_kaiyun':
                 $results = $this->readKaiYunData();
                 break;
-            
+            case 'buy_caifu':
+                $results = $this->buyCaifuData();
+                break;
             case 'read_yunshi':
                 $results = $this->readNengLiangYunShiData();
                 break;
@@ -165,6 +167,23 @@ class AstrologyController extends ControllerBase
         }
         
         return $results;
+    }
+    
+    public function buyCaifuData(){
+      $fields =  array(
+            'ispay'=>1
+        );
+        
+        \Drupal::database()->update("users_xingpan_data")
+        ->condition('wxid', UserService::getWxId())->condition("id", $_REQUEST['xingpan_report_id'])
+        ->fields($fields)
+        ->execute();
+        
+        var_dump(UserService::getWxId());
+        var_dump($_REQUEST['xingpan_report_id']);
+        
+        return array();
+        
     }
 
     public function readNengLiangYunShiData()
