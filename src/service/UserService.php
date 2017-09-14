@@ -65,7 +65,7 @@ class UserService
     
     public static function login($openId, $sessionid)
     {
-        setcookie("ast_c_id", $openId, time() + 7 * 24 * 3600, "/");
+        setcookie("ast_c_id_cookie_id", $openId, time() + 7 * 24 * 3600, "/");
         $_SESSION['ast_c_id_session_id'] = $sessionid;
         
         $fields = array(
@@ -83,6 +83,9 @@ class UserService
     public static function loadLoginInfo()
     {
         $sessionId = $_SESSION['ast_c_id_session_id'];
+        if(empty($sessionId)){
+            $sessionId = $_COOKIE['ast_c_id_session_id'];
+        }
         $query = \Drupal::database()->select('users_login', 'n');
         $query->condition('n.ast_c_id_session_id', $sessionId);
         $query->condition('n.expire_time', time(), ">");
