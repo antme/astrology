@@ -200,7 +200,6 @@ class WeixinService
                 $order_info["package"] =  $orderids;
                 $order_info["order_string"] =  $order_string;
                 
-                var_dump($order_string);
                 return $order_info;
             }
         }
