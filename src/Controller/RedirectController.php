@@ -15,7 +15,7 @@ class RedirectController extends ControllerBase
 {
     public function do_req($method)
     {
-        
+        session_start();
         $results = array();
         switch ($method){
             case  'wx':
@@ -27,7 +27,7 @@ class RedirectController extends ControllerBase
                 }
                 LoggerUtil::log("do_req:" . $method, $redirect_url);
            
-                return new RedirectResponse($redirect_url);
+               
                 break;
             case 'js_sdk':
                 $results = $this->loadJSSdkConfig();
@@ -51,6 +51,9 @@ class RedirectController extends ControllerBase
                 return new Response("", "200", $headers);
             }
             
+        }else if($method == "wx"){
+            
+            return new RedirectResponse($redirect_url);
         }else{
         
             $res =  new JsonResponse( $results );

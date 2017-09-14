@@ -87,7 +87,13 @@ class UserService
             $sessionId = $_COOKIE['ast_c_id_session_id'];
         }
         
-        LoggerUtil::log("loadLoginInfo", " loadLoginInfo from session " . $sessionId . "  or cookie : " . $_COOKIE['ast_c_id_session_id']);
+        LoggerUtil::log("loadLoginInfo", " loadLoginInfo from session:" . $sessionId . " or cookie :" . $_COOKIE['ast_c_id_cookie_id']);
+        
+        if(empty($sessionId)){
+            $sessionId = uniqid();
+            setcookie("ast_c_id_cookie_id", $sessionId, time() + 7 * 24 * 3600, "/");
+            $_SESSION['ast_c_id_session_id'] = $sessionId;
+        }
         $query = \Drupal::database()->select('users_login', 'n');
         $query->condition('n.ast_c_id_session_id', $sessionId);
         $query->condition('n.expire_time', time(), ">");
