@@ -91,11 +91,17 @@ class UserService
         $query = \Drupal::database()->select('users_login', 'n');
         $query->condition('n.ast_c_id_session_id', $sessionId);
         $query->condition('n.expire_time', time(), ">");
+        $query->orderBy('n.expire_time', 'DESC');
         $query->fields('n', array(
             'openId',
             'ast_c_id_session_id'
         ));
-        return $query->execute()->fetchAssoc();
+        $result = $query->execute()->fetchAll();
+        
+        if(!empty($result)){
+            return $result[0];
+        }
+        return $result;
     }
 }
 
