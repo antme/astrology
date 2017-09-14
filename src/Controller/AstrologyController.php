@@ -50,21 +50,41 @@ class AstrologyController extends ControllerBase
         $res->setCallback($_REQUEST['callback']);
         return $res;
     }
-
-    public function readXinpanResultData()
-    {
+    
+    public static function loadXinPanData($id=""){
         $wxId = UserService::getWxId();
         
         $query = \Drupal::database()->select('users_xingpan_data', 'n');
         $query->condition('n.wxid', $wxId);
+        if(!empty($id)){
+            $query->condition('n.id', $id);
+        }
+        $query->orderBy("n.createdOn", "DESC");
+        
         $query->fields('n', array(
             'wxid',
-            'result'
+            'result',
+            'ispay',
+            'id',
+            'createdOn'
         ));
-        $results = $query->execute()->fetchAssoc();
-        $results['result'] = json_decode($results['result']);
+        $results = $query->execute()->fetchAll();
         
+        if(!empty($results)){
+            $data = $results[0];
+            $data->result = json_decode($results[0]->result);
+            return $data;
+        }
+
+        return new \stdClass();
+        
+    }
+
+    public function readXinpanResultData()
+    {
+        $results = AstrologyController::loadXinPanData($_REQUEST['id']);
         $type = $_REQUEST['type'];
+        
         $join_type = "gerenxingpan_caifumima";
         if ($type == "emotion") {
             $join_type = 'gerenxingpan_ganqingmima';
@@ -83,9 +103,9 @@ class AstrologyController extends ControllerBase
         
         $final_query_results = array();
         
-        $xingxinXingzuo = $results['result']->xingxinXingzuo;
-        $xingxinGonwei = $results['result']->xingxinGonwei;
-        $gongweiXingzuo = $results['result']->gonweiXingzuo;
+        $xingxinXingzuo = $results->result->xingxinXingzuo;
+        $xingxinGonwei =  $results->result->xingxinGonwei;
+        $gongweiXingzuo = $results->result->gonweiXingzuo;
         
         $check_arr = array();
         
@@ -106,7 +126,6 @@ class AstrologyController extends ControllerBase
         }
         
         foreach ($check_arr as $value) {
-            
             foreach ($query_results as $item) {
                 if ($item->title == $value) {
                     array_push($final_query_results, $item);

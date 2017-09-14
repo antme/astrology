@@ -99,29 +99,15 @@ class UserController extends ControllerBase
         
         $astro_result_fields = array(
             'result' => $output,
-            'wxid' => $wxId
+            'wxid' => $wxId,
+            'ispay' => 0,
+            'id' => uniqid(),
+            'createdOn'=>time()
         );
-        
-        $query = \Drupal::database()->select('users_xingpan_data', 'n');
-        $query->condition('n.wxid', $wxId);
-        $query->fields('n', array(
-            'wxid'
-        ));
-        
-        $results = $query->execute()->fetchAll();
-        $count = count($results);
-        
-        if ($count > 0) {
-            \Drupal::database()->update("users_xingpan_data")
-                ->condition('wxid', $wxId)
-                ->fields($astro_result_fields)
+  
+        \Drupal::database()->insert("users_xingpan_data")->fields($astro_result_fields)
                 ->execute();
-        } else {
-            \Drupal::database()->insert("users_xingpan_data")
-                ->fields($astro_result_fields)
-                ->execute();
-        }
-        
+  
         $astro_result = json_decode($output);
         
         return $astro_result->fileName;
@@ -135,25 +121,7 @@ class UserController extends ControllerBase
 
     function loadxingpan()
     {
-        $logger = new Logger("/tmp/ast");
-        $wxId = UserService::getWxId();
-        $logger->info("check wxid for loadxingpan " . $wxId);
-        
-        $query = \Drupal::database()->select('users_xingpan_data', 'n');
-        $query->condition('n.wxid', $wxId);
-        $query->fields('n', array(
-            'wxid',
-            'result'
-        ));
-        $results = $query->execute()->fetchAssoc();
-        
-        if (! empty($results) && isset($results['wxid'])) {
-            $results['result'] = json_decode($results['result']);
-            $results['wxid'] = $wxId;
-            return $results;
-        } else {
-            return array();
-        }
+        return AstrologyController::loadXinPanData();
     }
 
     function loadWeiXinUserInfo()
