@@ -193,7 +193,7 @@ class WeixinService
                 $orderids =  (string)$msgArr->prepay_id;
                 
                 // 这里参数的顺序要按照 key 值 ASCII 码升序排序
-                $order_string = "appId=".ConfigService::getAppId()."&noncestr=" . $nonce_str . "&package=" . $orderids . "&timestamp=" . $sdk_params['timestamp'] . "&signType=MD5";
+                $order_string = "appId=".ConfigService::getAppId()."&noncestr=" . $nonce_str . "&package=prepay_id=" . $orderids . "&timestamp=" . $sdk_params['timestamp'] . "&signType=MD5";
                 
                 $signature = md5($order_string);
                 $order_info["paySign"] = $signature;
