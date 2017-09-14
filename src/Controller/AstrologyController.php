@@ -179,8 +179,6 @@ class AstrologyController extends ControllerBase
         ->fields($fields)
         ->execute();
         
-        var_dump(UserService::getWxId());
-        var_dump($_REQUEST['xingpan_report_id']);
         
         return array();
         
