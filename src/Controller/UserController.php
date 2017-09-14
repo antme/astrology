@@ -34,7 +34,7 @@ class UserController extends ControllerBase
                 $results = $this->loadUserInfo();
                 break;
             case 'test':
-                $results = WeixinService::reqPreOrderId();
+                $results =$this->test();
                 break;
             case 'loadxingpan':
                 $results = $this->loadxingpan();
@@ -165,7 +165,20 @@ class UserController extends ControllerBase
     {
         // return DataUtil::getXingzuoByDate("2017-09-04 16:39:57");
         // return WeixinService::getJsTicket();
-        return WeixinService::authorization_code();
+//         return WeixinService::authorization_code();
+
+       // appId=wxa615717ee45f9b47&nonceStr=59ba458f278ed&package=prepay_id=wx20170914170209636d776a4b0062094763&signType=MD5&timeStamp=1505379727&key=b865048d1ae9e14c8a193652e3bf704b
+        $s1 = "appid=wxa615717ee45f9b47&nonceStr=59ba458f278ed&package=prepay_id=wx20170914170209636d776a4b0062094763&signType=MD5&timestamp=1505379727&key=b865048d1ae9e14c8a193652e3bf704b";
+        
+        $s2 = "appId=wxa615717ee45f9b47&nonceStr=59ba458f278ed&package=prepay_id=wx20170914170209636d776a4b0062094763&signType=MD5&timeStamp=1505379727&key=b865048d1ae9e14c8a193652e3bf704b";
+        
+        if($s1 == $s2){
+            var_dump(strtoupper(md5("appId=wxa615717ee45f9b47&nonceStr=59ba458f278ed&package=prepay_id=wx20170914170209636d776a4b0062094763&signType=MD5&timeStamp=1505379727&key=b865048d1ae9e14c8a193652e3bf704b")));
+            var_dump(strtoupper(md5($s1)));
+            var_dump(strtoupper(md5($s2)));
+            
+        }
+        
         
         // return array(urlencode("http://test.vlvlife.com/index.php/astrology/user/token"));
     }

@@ -33,8 +33,8 @@ class UserService
         $login_info = UserService::loadLoginInfo();
         
         if(!empty($login_info)){
-            LoggerUtil::log("getWxId", "load wxid from session " . $sessionId . " and open id is : " . $login_info['openId']);
-            $wxId = $login_info['openId'];
+            LoggerUtil::log("getWxId", "load wxid from session " . $sessionId . " and open id is : " . $login_info->openId);
+            $wxId = $login_info->openId;
         }
         
         if(empty($wxId) && ($_SERVER['HTTP_HOST']=='127.0.0.1' || $_SERVER['HTTP_HOST']=='localhost')){

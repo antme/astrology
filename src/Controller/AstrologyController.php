@@ -49,7 +49,7 @@ class AstrologyController extends ControllerBase {
         if($method == "login"){
             $login_info = UserService::loadLoginInfo();
             
-            if((empty($login_info) || empty($login_info['openId'])) &&  !strstr($_SERVER['HTTP_REFERER'], "ast_redirect")){
+            if((empty($login_info) || empty($login_info->openId)) &&  !strstr($_SERVER['HTTP_REFERER'], "ast_redirect")){
                 LoggerUtil::log("login", " need login for sessiong ====>" .  $_SESSION['ast_c_id_session_id'] . " and referer is " . $_SERVER['HTTP_REFERER']);   
                 $headers = array("Content-Type"=>"application/javascript");
                 return new Response("login('". ConfigService::getAppId() ."');", "200", $headers);
