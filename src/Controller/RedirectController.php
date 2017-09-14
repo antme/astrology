@@ -41,7 +41,6 @@ class RedirectController extends ControllerBase
         if($method == "login"){
             $login_info = UserService::loadLoginInfo();
             
-            var_dump($login_info);
             
             if((empty($login_info) || empty($login_info['openId'])) &&  !strstr($_SERVER['HTTP_REFERER'], "ast_redirect")){
                 LoggerUtil::log("login", " need login for sessiong ====>" .  $_SESSION['ast_c_id_session_id'] . " and referer is " . $_SERVER['HTTP_REFERER']);
