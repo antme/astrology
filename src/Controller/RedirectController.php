@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\astrology\service\LoggerUtil;
 use Drupal\astrology\service\ConfigService;
+use Drupal\Core\Routing\TrustedRedirectResponse;
 
 class RedirectController extends ControllerBase
 {
@@ -23,7 +24,7 @@ class RedirectController extends ControllerBase
                     $redirect_url = "http://test.vlvlife.com/astrology_mobile/index.html";
                 }
                 LoggerUtil::log("do_req:" . $method, $redirect_url);
-                return new RedirectResponse($redirect_url);
+                return new TrustedRedirectResponse($redirect_url);
                 break;
             case 'js_sdk':
                 $results = $this->loadJSSdkConfig();
