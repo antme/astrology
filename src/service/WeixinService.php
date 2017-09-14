@@ -195,7 +195,7 @@ class WeixinService
                 $order_string = "appId=".ConfigService::getAppId()."&noncestr=" . $sdk_params['nonceStr'] . "&package=" . $msgArr->prepay_id . "&timestamp=" . $sdk_params['timestamp'] . "&signType=SHA1";
                 
                 $orderids =  (string)$msgArr->prepay_id;
-                $signature = sha1($order_string);
+                $signature = md5($order_string);
                 $order_info["paySign"] = $signature;
                 $order_info["package"] =  $orderids;
                 
