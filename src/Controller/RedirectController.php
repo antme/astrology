@@ -50,7 +50,7 @@ class RedirectController extends ControllerBase
         );
 
         // 这里参数的顺序要按照 key 值 ASCII 码升序排序
-        $string = "jsapi_ticket=".$tickets['js_ticket']."&noncestr=" . $sdk_params['nonceStr'] . "&timestamp=" . $sdk_params['timestamp'] . "&url=" . $url;
+        $string = "jsapi_ticket=".$tickets['js_ticket']."&noncestr=" . $sdk_params['nonceStr'] . "&timestamp=" . $sdk_params['timestamp'] . "&url=" . urldecode($url);
         
         $signature = sha1($string);
         $sdk_params["signature"] = $signature;

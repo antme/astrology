@@ -34,7 +34,7 @@ class UserController extends ControllerBase
                 $results = $this->loadUserInfo();
                 break;
             case 'test':
-                $results = $this->test();
+                $results = WeixinService::reqPreOrderId();
                 break;
             case 'loadxingpan':
                 $results = $this->loadxingpan();

@@ -38,4 +38,15 @@ astrology.redirect:
     _title: 'Astrology API'
   requirements:
     _permission: 'access content'
+    
+    
+astrology.order:
+  path: '/astrology/order/{method}'
+  defaults:
+    _controller: '\Drupal\astrology\Controller\OrderController::do_req'
+    _title: 'Astrology API'
+  requirements:
+    _permission: 'access content'
+
+
 
