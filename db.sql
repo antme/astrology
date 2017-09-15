@@ -55,5 +55,12 @@ alter table users_xingpan_data add column ispay tinyint(1) default 0;
 alter table users_xingpan_data add column id varchar(36) default null;
 alter table users_xingpan_data add column createdOn int default 0;
 
+alter table users_xingzuo_data add column last_update int default 0;
+alter table users_xingzuo_data add column id varchar(36) default null;
+
+alter table users_xingpan_data add column u_x_d_id varchar(36) default null;
+
+
+
 
 

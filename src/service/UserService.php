@@ -19,13 +19,14 @@ class UserService
                 'wxid'
             ));
             $query->condition('n.wxid', $wxId);
-            $results = $query->execute()->fetchAssoc();
+            $query->orderBy("last_update","DESC");
+            $results = $query->execute()->fetchAll();
           
-            if(!empty($results) && isset($results['wxid'])){
-                return $results;
+            if(!empty($results) && isset($results[0]->wxid)){
+                return $results[0];
             }
         }
-        return array();
+        return new \stdClass();
     }
     
     public static function getWxId(){

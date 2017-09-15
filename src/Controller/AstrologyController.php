@@ -142,7 +142,7 @@ class AstrologyController extends ControllerBase
     {
         $wxId = UserService::getWxId();
         $user = UserService::loadUserInfo($wxId);
-        $xingzuo_name = DataUtil::getXingzuoByDate($user['birthDay']);
+        $xingzuo_name = DataUtil::getXingzuoByDate($user->birthDay);
         
         $query_str = "select n.title, x.field_xinggetezhi_value, s.field_shejiaoguanxi_value, b.body_value from node__field_xinggetezhi as x, node__field_shejiaoguanxi as s, node__body as b, node__field_guanlianxingzuo_list as g,
  node_field_data as n where n.nid=g.entity_id and g.entity_id=x.entity_id and g.entity_id=s.entity_id and b.entity_id=g.entity_id and g.field_guanlianxingzuo_list_value='" . $xingzuo_name['xingzuo'] . "';";
@@ -155,7 +155,7 @@ class AstrologyController extends ControllerBase
     {
         $wxId = UserService::getWxId();
         $user = UserService::loadUserInfo($wxId);
-        $xingzuo_name = DataUtil::getXingzuoByDate($user['birthDay']);
+        $xingzuo_name = DataUtil::getXingzuoByDate($user->birthDay);
         
         $query_str = "select b.field_buchangxingzuo_value, y.field_xingyunyanse_value,j.field_duiyingjinshu_value, k.field_kaiyunbaoshi_value from node__field_kaiyunbaoshi as k, node__field_xingzuo_name as g
         , node__field_duiyingjinshu as j,node__field_xingyunyanse as y,node__field_buchangxingzuo as b where b.entity_id=g.entity_id and y.entity_id=g.entity_id and j.entity_id=g.entity_id and k.entity_id=g.entity_id
@@ -188,7 +188,7 @@ class AstrologyController extends ControllerBase
     {
         $wxId = UserService::getWxId();
         $user = UserService::loadUserInfo($wxId);
-        $xingzuo_name = DataUtil::getXingzuoByDate($user['birthDay']);
+        $xingzuo_name = DataUtil::getXingzuoByDate($user->birthDay);
         
         $query_str = "select x.field_xingxing_value, d.field_nengliangdingwei_value, z.field_nengliangxingzhi_value, f.field_nengliangfangxiang_value,
         xg.field_xingzuoxinggejiyu_value from node__field_xingxing as x, node__field_nengliangdingwei as d , node__field_nengliangxingzhi as z,

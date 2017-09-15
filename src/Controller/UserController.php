@@ -62,9 +62,14 @@ class UserController extends ControllerBase
         $wxId = UserService::getWxId();
         $query = \Drupal::database()->select('users_xingzuo_data', 'n');
         $query->condition('n.wxid', $wxId);
+        $query->condition('n.name', $_REQUEST['name']);
+        $query->condition('n.birthDay', $_REQUEST['birthDay']);
         $query->fields('n', array(
-            'wxid'
+            'wxid',
+            'id'
         ));
+        
+      
         
         $results = $query->execute()->fetchAll();
         $count = count($results);
@@ -77,13 +82,17 @@ class UserController extends ControllerBase
             'birth_address' => $_REQUEST['birth_address'],
             'wxid' => $wxId
         );
-        
+        $x_z_d_id = "";
         if ($count > 0) {
+          
+            $x_z_d_id =   $results[0]->id;
             $exe_results = \Drupal::database()->update("users_xingzuo_data")
-                ->condition('wxid', $wxId)
+            ->condition('id', $x_z_d_id)
                 ->fields($fields)
                 ->execute();
         } else {
+            $x_z_d_id = uniqid();
+            $fields['id'] = $x_z_d_id;
             $exe_results = \Drupal::database()->insert("users_xingzuo_data")
                 ->fields($fields)
                 ->execute();
@@ -102,11 +111,12 @@ class UserController extends ControllerBase
             'wxid' => $wxId,
             'ispay' => 0,
             'id' => uniqid(),
-            'createdOn'=>time()
+            'createdOn'=>time(),
+            'u_x_d_id' => $x_z_d_id
         );
-  
-        \Drupal::database()->insert("users_xingpan_data")->fields($astro_result_fields)
-                ->execute();
+        
+        \Drupal::database()->delete("users_xingpan_data")->condition('u_x_d_id', $x_z_d_id);
+        \Drupal::database()->insert("users_xingpan_data")->fields($astro_result_fields)->execute();
   
         $astro_result = json_decode($output);
         
