@@ -45,6 +45,12 @@ class UserController extends ControllerBase
             case 'load_wx_user':
                 $results = $this->loadWeiXinUserInfo();
                 break;
+            case 'count_total_report':
+                $results = $this->countTotaLReport();
+                break;
+            case 'list_person_report':
+                $results = $this->listPersonReport();
+                break;
             default:
                 break;
         }
@@ -63,24 +69,24 @@ class UserController extends ControllerBase
         $query = \Drupal::database()->select('users_xingzuo_data', 'n');
         $query->condition('n.wxid', $wxId);
         $query->condition('n.name', $_REQUEST['name']);
-        $query->condition('n.birthDay', $_REQUEST['birthDay']);
+//         $query->condition('n.birthDay', $_REQUEST['birthDay']);
         $query->fields('n', array(
             'wxid',
             'id'
         ));
         
       
-        
+        LoggerUtil::log("addUser", $_REQUEST['birthDay']);
         $results = $query->execute()->fetchAll();
         $count = count($results);
-        
         $fields = array(
             'name' => $_REQUEST['name'],
             'sex' => $_REQUEST['sex'],
             'birthDay' => $_REQUEST['birthDay'],
             'live_address' => $_REQUEST['live_address'],
             'birth_address' => $_REQUEST['birth_address'],
-            'wxid' => $wxId
+            'wxid' => $wxId,
+            'last_update' => time()
         );
         $x_z_d_id = "";
         if ($count > 0) {
@@ -137,6 +143,14 @@ class UserController extends ControllerBase
     function loadWeiXinUserInfo()
     {
         $wxId = UserService::getWxId();
+    }
+    
+    public function countTotaLReport(){
+       return UserService::countTotaLReport();      
+    }
+    
+    public function listPersonReport(){
+        return UserService::listPersonReport();    
     }
 
     public function test()
