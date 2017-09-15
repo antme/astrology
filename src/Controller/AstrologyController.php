@@ -53,13 +53,17 @@ class AstrologyController extends ControllerBase
         return $res;
     }
     
-    public static function loadXinPanData($id=""){
+    public static function loadXinPanData($id="", $user_data_id=""){
         $wxId = UserService::getWxId();
         
         $query = \Drupal::database()->select('users_xingpan_data', 'n');
         $query->condition('n.wxid', $wxId);
         if(!empty($id)){
             $query->condition('n.id', $id);
+        }
+        
+        if(!empty($user_data_id)){
+            $query->condition('n.u_x_d_id', $user_data_id);
         }
         $query->orderBy("n.createdOn", "DESC");
         
@@ -68,13 +72,15 @@ class AstrologyController extends ControllerBase
             'result',
             'ispay',
             'id',
-            'createdOn'
+            'createdOn',
+            'u_x_d_id'
         ));
         $results = $query->execute()->fetchAll();
         
         if(!empty($results)){
             $data = $results[0];
-            $data->result = json_decode($results[0]->result);
+            $data->result = json_decode($results[0]->result);           
+            $data->user_xingzuo_data = UserService::loadXingzuoData($results[0]->u_x_d_id);
             return $data;
         }
 

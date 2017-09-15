@@ -121,7 +121,7 @@ class UserController extends ControllerBase
             'u_x_d_id' => $x_z_d_id
         );
         
-        \Drupal::database()->delete("users_xingpan_data")->condition('u_x_d_id', $x_z_d_id);
+        \Drupal::database()->delete("users_xingpan_data")->condition('u_x_d_id', $x_z_d_id)->execute();
         \Drupal::database()->insert("users_xingpan_data")->fields($astro_result_fields)->execute();
   
         $astro_result = json_decode($output);
@@ -137,7 +137,8 @@ class UserController extends ControllerBase
 
     function loadxingpan()
     {
-        return AstrologyController::loadXinPanData();
+        
+        return AstrologyController::loadXinPanData("", $_REQUEST['user_data_id']);
     }
 
     function loadWeiXinUserInfo()

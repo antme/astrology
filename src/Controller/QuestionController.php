@@ -50,8 +50,19 @@ class QuestionController extends ControllerBase {
       
       $query_str = "select n.uuid, d.title from node as n inner join node_field_data as d on d.nid=n.nid where n.type='jiujiedewenti' and d.type='jiujiedewenti';";
       $results = \Drupal::database()->query($query_str)->fetchAll();
-
+      $history_question = $this->listHistoryQuestionName(date("Y-m-d"));
       
+      foreach($results as $key=>$value) {
+          $results[$key]->is_allowed_today = true;
+          foreach($history_question as $h_key=>$h_value) {
+              if($h_value->question_name == $value->title){
+                  $results[$key]->is_allowed_today = false;
+                  break;
+              }
+          }
+      }
+
+
       return   $results;
   }
   
@@ -203,7 +214,7 @@ class QuestionController extends ControllerBase {
           
       }else if($xingzuo_results->field_xingzuo_name_value == "shizi"){
           $luozai_xingzuo_table="node__field_xingxingluozaishizizuo";
-          $luozai_xingzuo_field="field_xingxingluozaijuxiezuo_value";
+          $luozai_xingzuo_field="field_xingxingluozaishizizuo_value";
           
       }else if($xingzuo_results->field_xingzuo_name_value == "chunv"){
           $luozai_xingzuo_table="node__field_xingxingluozaichunuzuo";
@@ -314,7 +325,7 @@ class QuestionController extends ControllerBase {
   
   
   
-  public function listHistoryQuestionName(){
+  public function listHistoryQuestionName($zx_date=""){
       $wxId = UserService::getWxId();      
       $fields = array(
           'wxid',
@@ -324,7 +335,11 @@ class QuestionController extends ControllerBase {
       );
       $query = \Drupal::database()->select('users_zhanxing_history', 'n');
       $query->condition('n.wxid', $wxId);    
-      $query->condition('n.zx_date', $_REQUEST['zx_date']); 
+      if(empty($zx_date)){
+        $query->condition('n.zx_date', $_REQUEST['zx_date']); 
+      }else{
+          $query->condition('n.zx_date', $zx_date);
+      }
       $query->fields('n', $fields);
       
       $results = $query->execute()->fetchAll();

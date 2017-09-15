@@ -41,7 +41,7 @@ class UserService
             $wxId = uniqid();
             setcookie("ast_c_id", $wxId, time() + 7 * 24 * 3600, "/");
         }
-        return 'oGKRLwf_rZaUfCt0Zw04IUwzPvhs';
+        return $wxId;
     }
 
     public static function loadWeixinUserInfo($openId)
@@ -128,6 +128,24 @@ class UserService
         $query->condition('n.wxid', $wxId);
         $query->orderBy("last_update", "DESC");
         return $query->execute()->fetchAll();
+    }
+    
+    public static function loadXingzuoData($user_xz_id)
+    {
+        $query = \Drupal::database()->select('users_xingzuo_data', 'n');
+       
+        
+        $query->fields('n', array(
+            'name',
+            'sex',
+            'birthDay',
+            'live_address',
+            'birth_address'
+        ));
+        
+        
+        $query->condition('n.id', $user_xz_id);
+        return $query->execute()->fetchAssoc();
     }
 }
 
