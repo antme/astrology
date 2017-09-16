@@ -30,7 +30,7 @@ class AstrologyController extends ControllerBase
         $sessionId = $_SESSION['ast_c_id_session_id'];
         switch ($method) {
             case 'read_result':
-                $results = $this->readXinpanResultData();
+                $results =  AstrologyController::readXinpanResultData("","");
                 break;
             case 'read_xingxiang':
                 $results = $this->readXingXiangData();
@@ -81,6 +81,23 @@ class AstrologyController extends ControllerBase
             $data = $results[0];
             $data->result = json_decode($results[0]->result);           
             $data->user_xingzuo_data = UserService::loadXingzuoData($results[0]->u_x_d_id);
+            
+            $tag1 = AstrologyController::readXinpanResultData($data, "emotion");
+            $tag2 = AstrologyController::readXinpanResultData($data, "relationship");
+            $tag3 = AstrologyController::readXinpanResultData($data, "fortune");
+            $tag4 = AstrologyController::readXinpanResultData($data, "businese");
+            if(!empty($tag1)){
+                $data->tag1 = $tag1[0]->title;
+            }
+            if(!empty($tag2)){
+                $data->tag2 = $tag2[0]->title;
+            }
+            if(!empty($tag3)){
+                $data->tag3  = $tag3[0]->title;
+            }
+            if(!empty($tag4)){
+                $data->tag4 = $tag4[0]->title;
+            }
             return $data;
         }
 
@@ -88,10 +105,13 @@ class AstrologyController extends ControllerBase
         
     }
 
-    public function readXinpanResultData()
+    public static function readXinpanResultData($results="", $type)
     {
-        $results = AstrologyController::loadXinPanData($_REQUEST['id']);
-        $type = $_REQUEST['type'];
+        if(empty($results)){
+            $id = $_REQUEST['id'];    
+            $type = $_REQUEST['type'];      
+            $results = AstrologyController::loadXinPanData($id);
+        }
         
         $join_type = "gerenxingpan_caifumima";
         if ($type == "emotion") {
@@ -114,6 +134,7 @@ class AstrologyController extends ControllerBase
         $xingxinXingzuo = $results->result->xingxinXingzuo;
         $xingxinGonwei =  $results->result->xingxinGonwei;
         $gongweiXingzuo = $results->result->gonweiXingzuo;
+        
         
         $check_arr = array();
         
