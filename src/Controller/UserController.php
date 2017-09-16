@@ -85,6 +85,7 @@ class UserController extends ControllerBase
             'birthDay' => $_REQUEST['birthDay'],
             'live_address' => $_REQUEST['live_address'],
             'birth_address' => $_REQUEST['birth_address'],
+            'region_id_list' => $_REQUEST['region_id_list'],
             'wxid' => $wxId,
             'last_update' => time()
         );

@@ -14,7 +14,8 @@ class UserService
                 'birthDay',
                 'live_address',
                 'birth_address',
-                'wxid'
+                'wxid',
+                'region_id_list'
             ));
             $query->condition('n.wxid', $wxId);
             $query->orderBy("last_update", "DESC");

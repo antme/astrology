@@ -62,5 +62,8 @@ alter table users_xingpan_data add column u_x_d_id varchar(36) default null;
 
 
 
+alter table users_xingzuo_data add column region_id_list varchar(36) default null;
+
+
 
 
