@@ -61,9 +61,14 @@ class QuestionController extends ControllerBase {
               }
           }
       }
-
-
-      return   $results;
+      
+   
+      
+      return array(     
+          "q_count"=>sizeof($history_question),
+          "rows"=>$results    
+      );
+   
   }
   
   public function getQuestion(){
