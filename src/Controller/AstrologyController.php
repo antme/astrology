@@ -168,7 +168,9 @@ class AstrologyController extends ControllerBase
             }
         }
         
-        return $final_query_results;
+        $user = UserService::loadXingzuoData($results->u_x_d_id);
+        $user['results']=$final_query_results;
+        return $user;
     }
 
     public function readXingXiangData()
@@ -222,7 +224,7 @@ class AstrologyController extends ControllerBase
         $wxId = UserService::getWxId();
         $user = UserService::loadUserInfo($wxId);
         $xingzuo_name = DataUtil::getXingzuoByDate($user->birthDay);
-        
+   
         $query_str = "select x.field_xingxing_value, d.field_nengliangdingwei_value, z.field_nengliangxingzhi_value, f.field_nengliangfangxiang_value,
         xg.field_xingzuoxinggejiyu_value from node__field_xingxing as x, node__field_nengliangdingwei as d , node__field_nengliangxingzhi as z,
         node__field_xingzuoxinggejiyu as xg,node__field_nengliangfangxiang as f, node__field_xingzuo_name as g where x.entity_id=g.entity_id and d.entity_id=g.entity_id and z.entity_id=g.entity_id
