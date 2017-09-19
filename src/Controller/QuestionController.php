@@ -123,23 +123,24 @@ class QuestionController extends ControllerBase {
          $data->gw = $gw_results;
        
          
+         $result = $this->viewQuestionResult(false);
+         $data->jx = $result->jx;
+         
          $fields = array(
              'wxid' => $wxId,
              'question_name' => $question_name,
              'zx_date' => date("Y-m-d"),
              'result' => json_encode($data)
          );
-         
+    
          \Drupal::database()->insert("users_zhanxing_history")->fields($fields)->execute();
      
      }else{
-         
-   
+ 
          $data = json_decode($data->result);
       
      }
-     $result = $this->viewQuestionResult(false);
-     $data->jx = $result->jx;
+
      return $data;
   }
   
