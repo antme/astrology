@@ -29,7 +29,7 @@ class QuestionController extends ControllerBase {
             $results =  $this->randomZhanxin();
             break;   
         case 'viewquestionresult':
-            $results =  $this->viewQuestionResult(true);
+            $results =  $this->viewQuestionResult(array());
             break;   
         case 'listHistoryQuestionDate':
             $results =  $this->listHistoryQuestionDate();
@@ -122,8 +122,13 @@ class QuestionController extends ControllerBase {
          $data->xingxing = $xingxin_results;
          $data->gw = $gw_results;
        
+         $check_data = array(
+             "xingzuo_id" => $xingzuo_results->entity_id,
+             "xingxin_id" => $xingxin_results->entity_id,
+             "gongwei_id" => $gw_results->entity_id
+         );
          
-         $result = $this->viewQuestionResult(false);
+         $result = $this->viewQuestionResult($check_data);
          $data->jx = $result->jx;
          
          $fields = array(
@@ -144,10 +149,19 @@ class QuestionController extends ControllerBase {
      return $data;
   }
   
-  public function viewQuestionResult($detail=false){
+  public function viewQuestionResult($check_data=""){
       $xingzuo_id=$_REQUEST['xingzuo_id'];
       $xingxin_id=$_REQUEST['xingxin_id'];
       $gongwei_id=$_REQUEST['gongwei_id'];
+      if(!empty($check_data['xingzuo_id'])){
+          $xingzuo_id = $check_data['xingzuo_id'];
+      }
+      if(!empty($check_data['xingxin_id'])){
+          $xingxin_id = $check_data['xingxin_id'];
+      }
+      if(!empty($check_data['gongwei_id'])){
+          $gongwei_id = $check_data['gongwei_id'];
+      }
       
       $query_str = "select n.entity_id,n.field_xingzuo_name_value, f.uri, j.field_xingzuojixiong_value from node__field_xingzuo_name as n, node__field_xingzuotubiao as t, file_managed as f, node__field_xingzuojixiong as j where j.entity_id=n.entity_id and n.entity_id = t.entity_id and t.field_xingzuotubiao_target_id = f.fid and n.bundle='shierxingzuo' and n.entity_id='".$xingzuo_id."'";
       $xingzuo_results = \Drupal::database()->query($query_str)->fetchObject();
@@ -214,7 +228,7 @@ class QuestionController extends ControllerBase {
           }
       }
       
-      if($good_result){           
+      if($good_result == true){           
           $r_sql = "select n.nid, d.field_zhanxingjidaan_value from node n, node__field_zhanxingjidaan d where n.nid=d.entity_id and n.uuid='" . $_REQUEST["question_id"] ."'";
       }else{
           $r_sql = "select n.nid, d.field_zhanxingxiongdaan_value from node n, node__field_zhanxingxiongdaan d where n.nid=d.entity_id and n.uuid='" . $_REQUEST["question_id"] ."'";
@@ -226,7 +240,7 @@ class QuestionController extends ControllerBase {
       }
       
       
-      if($detail){
+      if(empty($check_data)){
       
           $luozai_xingzuo_table = "";
           $luozai_xingzuo_field = "";
