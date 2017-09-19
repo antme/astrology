@@ -134,7 +134,7 @@ class AstrologyController extends ControllerBase
         $xingxinXingzuo = $results->result->xingxinXingzuo;
         $xingxinGonwei =  $results->result->xingxinGonwei;
         $gongweiXingzuo = $results->result->gonweiXingzuo;
-        
+        $xiangwei = $results->result->xiangwei;
         
         $check_arr = array();
         
@@ -149,6 +149,12 @@ class AstrologyController extends ControllerBase
             }
         }
         foreach ($gongweiXingzuo as $item) {
+            if (! in_array($item, $check_arr)) {
+                array_push($check_arr, $item);
+            }
+        }
+        
+        foreach ($xiangwei as $item) {
             if (! in_array($item, $check_arr)) {
                 array_push($check_arr, $item);
             }
