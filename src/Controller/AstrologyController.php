@@ -85,18 +85,71 @@ class AstrologyController extends ControllerBase
             $tag2 = AstrologyController::readXinpanResultData($data, "relationship");
             $tag3 = AstrologyController::readXinpanResultData($data, "fortune");
             $tag4 = AstrologyController::readXinpanResultData($data, "businese");
-            if(!empty($tag1)){
-                $data->tag1 = $tag1['results'][0]->title;
+            
+            $tags = array();
+       
+           
+            foreach ($tag1['results'] as $item) {
+                if(strpos($item->title, "太阳")===0){
+                    array_push($tags, $item->title);
+                }
+                
+                if(strpos($item->title, "上升")===0){
+                    array_push($tags, $item->title);
+                }
+                
+                if(strpos($item->title, "月亮")===0){
+                    array_push($tags, $item->title);
+                }
+                
             }
-            if(!empty($tag2)){
-                $data->tag2 = $tag2['results'][0]->title;
+            
+            foreach ($tag2['results'] as $item) {
+                if(strpos($item->title, "太阳")===0){
+                    array_push($tags, $item->title);
+                }
+                
+                if(strpos($item->title, "上升")===0){
+                    array_push($tags, $item->title);
+                }
+                
+                if(strpos($item->title, "月亮")===0){
+                    array_push($tags, $item->title);
+                }
+                
             }
-            if(!empty($tag3)){
-                $data->tag3  = $tag3['results'][0]->title;
+            
+            foreach ($tag3['results'] as $item) {
+                if(strpos($item->title, "太阳")===0){
+                    array_push($tags, $item->title);
+                }
+                
+                if(strpos($item->title, "上升")===0){
+                    array_push($tags, $item->title);
+                }
+                
+                if(strpos($item->title, "月亮")===0){
+                    array_push($tags, $item->title);
+                }
+                
             }
-            if(!empty($tag4)){
-                $data->tag4 = $tag4['results'][0]->title;
+            
+            foreach ($tag4['results'] as $item) {
+                if(strpos($item->title, "太阳")===0){
+                    array_push($tags, $item->title);
+                }
+                
+                if(strpos($item->title, "上升")===0){
+                    array_push($tags, $item->title);
+                }
+                
+                if(strpos($item->title, "月亮")===0){
+                    array_push($tags, $item->title);
+                }
+                
             }
+           
+            $data->tags = $tags;
             return $data;
         }
 
