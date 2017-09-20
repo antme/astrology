@@ -76,7 +76,6 @@ class AstrologyController extends ControllerBase
             'u_x_d_id'
         ));
         $results = $query->execute()->fetchAll();
-        
         if(!empty($results)){
             $data = $results[0];
             $data->result = json_decode($results[0]->result);           
@@ -87,16 +86,16 @@ class AstrologyController extends ControllerBase
             $tag3 = AstrologyController::readXinpanResultData($data, "fortune");
             $tag4 = AstrologyController::readXinpanResultData($data, "businese");
             if(!empty($tag1)){
-                $data->tag1 = $tag1[0]->title;
+                $data->tag1 = $tag1['results'][0]->title;
             }
             if(!empty($tag2)){
-                $data->tag2 = $tag2[0]->title;
+                $data->tag2 = $tag2['results'][0]->title;
             }
             if(!empty($tag3)){
-                $data->tag3  = $tag3[0]->title;
+                $data->tag3  = $tag3['results'][0]->title;
             }
             if(!empty($tag4)){
-                $data->tag4 = $tag4[0]->title;
+                $data->tag4 = $tag4['results'][0]->title;
             }
             return $data;
         }
@@ -138,6 +137,7 @@ class AstrologyController extends ControllerBase
         
         $check_arr = array();
         
+        
         foreach ($xingxinXingzuo as $item) {
             if (! in_array($item, $check_arr)) {
                 array_push($check_arr, $item);
@@ -167,6 +167,7 @@ class AstrologyController extends ControllerBase
                 }
             }
         }
+        
         
         $user = UserService::loadXingzuoData($results->u_x_d_id);
         $user['results']=$final_query_results;
