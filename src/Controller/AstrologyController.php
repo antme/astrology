@@ -80,76 +80,66 @@ class AstrologyController extends ControllerBase
             $data = $results[0];
             $data->result = json_decode($results[0]->result);           
             $data->user_xingzuo_data = UserService::loadXingzuoData($results[0]->u_x_d_id);
+    
+            $final_query_results = array();
             
-            $tag1 = AstrologyController::readXinpanResultData($data, "emotion");
-            $tag2 = AstrologyController::readXinpanResultData($data, "relationship");
-            $tag3 = AstrologyController::readXinpanResultData($data, "fortune");
-            $tag4 = AstrologyController::readXinpanResultData($data, "businese");
+            $xingxinXingzuo = $data->result->xingxinXingzuo;
+            $xingxinGonwei =  $data->result->xingxinGonwei;
+            $gongweiXingzuo = $data->result->gonweiXingzuo;
             
-            $tags = array();
+            $check_arr = array();
+            
+            
+            foreach ($xingxinXingzuo as $item) {
+                if (! in_array($item, $check_arr)) {
+                    array_push($check_arr, $item);
+                }
+            }
+            foreach ($xingxinGonwei as $item) {
+                if (! in_array($item, $check_arr)) {
+                    array_push($check_arr, $item);
+                }
+            }
+            foreach ($gongweiXingzuo as $item) {
+                if (! in_array($item, $check_arr)) {
+                    array_push($check_arr, $item);
+                }
+            }
+            
+            foreach ($xiangwei as $item) {
+                if (! in_array($item, $check_arr)) {
+                    array_push($check_arr, $item);
+                }
+            }
+            
+            foreach ($check_arr as $value) {
+           
+                if(strpos($value, "太阳")===0){           
+                    $data->tag1 = $value;
+                    break;
+                }
+            }
+            
+            foreach ($check_arr as $value) {
+                
+                if(strpos($value, "上升")===0){
+                    $data->tag2 = $value;
+                    break;
+                }
+            }
+            
+            
+            foreach ($check_arr as $value) {
+                
+                if(strpos($value, "月亮")===0){
+                    $data->tag3 = $value;
+                    break;
+                }
+            }
+            
        
            
-            foreach ($tag1['results'] as $item) {
-                if(strpos($item->title, "太阳")===0){
-                    array_push($tags, $item->title);
-                }
-                
-                if(strpos($item->title, "上升")===0){
-                    array_push($tags, $item->title);
-                }
-                
-                if(strpos($item->title, "月亮")===0){
-                    array_push($tags, $item->title);
-                }
-                
-            }
-            
-            foreach ($tag2['results'] as $item) {
-                if(strpos($item->title, "太阳")===0){
-                    array_push($tags, $item->title);
-                }
-                
-                if(strpos($item->title, "上升")===0){
-                    array_push($tags, $item->title);
-                }
-                
-                if(strpos($item->title, "月亮")===0){
-                    array_push($tags, $item->title);
-                }
-                
-            }
-            
-            foreach ($tag3['results'] as $item) {
-                if(strpos($item->title, "太阳")===0){
-                    array_push($tags, $item->title);
-                }
-                
-                if(strpos($item->title, "上升")===0){
-                    array_push($tags, $item->title);
-                }
-                
-                if(strpos($item->title, "月亮")===0){
-                    array_push($tags, $item->title);
-                }
-                
-            }
-            
-            foreach ($tag4['results'] as $item) {
-                if(strpos($item->title, "太阳")===0){
-                    array_push($tags, $item->title);
-                }
-                
-                if(strpos($item->title, "上升")===0){
-                    array_push($tags, $item->title);
-                }
-                
-                if(strpos($item->title, "月亮")===0){
-                    array_push($tags, $item->title);
-                }
-                
-            }
-           
-            $data->tags = $tags;
+      
             return $data;
         }
 
