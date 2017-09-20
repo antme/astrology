@@ -106,11 +106,7 @@ class AstrologyController extends ControllerBase
                 }
             }
             
-            foreach ($xiangwei as $item) {
-                if (! in_array($item, $check_arr)) {
-                    array_push($check_arr, $item);
-                }
-            }
+     
             
             foreach ($check_arr as $value) {
            
@@ -120,8 +116,7 @@ class AstrologyController extends ControllerBase
                 }
             }
             
-            foreach ($check_arr as $value) {
-                
+            foreach ($check_arr as $value) {                
                 if(strpos($value, "上升")===0){
                     $data->tag2 = $value;
                     break;
@@ -129,8 +124,16 @@ class AstrologyController extends ControllerBase
             }
             
             
-            foreach ($check_arr as $value) {
-                
+            if(empty($data->tag2)){
+                foreach ($check_arr as $value) {
+                    if(strpos($value, "下降")===0){
+                        $data->tag2 = $value;
+                        break;
+                    }
+                }
+            }
+            
+            foreach ($check_arr as $value) {                
                 if(strpos($value, "月亮")===0){
                     $data->tag3 = $value;
                     break;
