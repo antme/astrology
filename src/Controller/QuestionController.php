@@ -63,9 +63,9 @@ class QuestionController extends ControllerBase {
       }
       
    
-      
+      $all_history_question = $this->listHistoryQuestionName();     
       return array(     
-          "q_count"=>sizeof($history_question),
+          "q_count"=>sizeof($all_history_question),
           "rows"=>$results    
       );
    
