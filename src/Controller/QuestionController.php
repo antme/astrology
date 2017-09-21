@@ -50,7 +50,7 @@ class QuestionController extends ControllerBase {
       
       $query_str = "select n.uuid, d.title from node as n inner join node_field_data as d on d.nid=n.nid where n.type='jiujiedewenti' and d.type='jiujiedewenti';";
       $results = \Drupal::database()->query($query_str)->fetchAll();
-      $history_question = $this->listHistoryQuestionName();
+      $history_question = $this->listHistoryQuestionName(date("Y-m-d"));
       
       foreach($results as $key=>$value) {
           $results[$key]->is_allowed_today = true;
