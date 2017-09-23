@@ -173,7 +173,6 @@ class AstrologyController extends ControllerBase
         
         $query_sql = "select t.nid, t.title, b.body_value from  node_field_data as t, node__body as b, node as n where n.type = '" . $join_type . "' and n.nid=t.nid and n.nid=b.entity_id";
         $query_results = \Drupal::database()->query($query_sql)->fetchAll();
-        
         $final_query_results = array();
         
         $xingxinXingzuo = $results->result->xingxinXingzuo;
@@ -182,7 +181,6 @@ class AstrologyController extends ControllerBase
         $xiangwei = $results->result->xiangwei;
         
         $check_arr = array();
-        
         
         foreach ($xingxinXingzuo as $item) {
             if (! in_array($item, $check_arr)) {
@@ -205,15 +203,14 @@ class AstrologyController extends ControllerBase
                 array_push($check_arr, $item);
             }
         }
-        
+     
         foreach ($check_arr as $value) {
             foreach ($query_results as $item) {
-                if ($item->title == $value) {
+                if (strpos(trim($item->title),trim($value))!==false) {
                     array_push($final_query_results, $item);
                 }
             }
         }
-        
         
         $user = UserService::loadXingzuoData($results->u_x_d_id);
         $user['results']=$final_query_results;
